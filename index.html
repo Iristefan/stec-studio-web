@@ -11,14 +11,20 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="StecStudio | AI Agents &amp; Digital Solutions">
     <meta property="og:description" content="Custom AI agents, web platforms and automations for businesses.">
-    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="https://stecstudio.ai/">
+    <meta property="og:image" content="https://stecstudio.ai/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://stecstudio.ai/">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 103 134'%3E%3Cpolyline points='85,36 54,16 14,40 14,56 46,76' fill='none' stroke='%23f4f6f9' stroke-width='22' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='60,50 89,69 89,93 51,118 14,93 14,83' fill='none' stroke='%2309cdd2' stroke-width='22' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <!-- Fonts are self-hosted: no visitor data is sent to Google -->
+    <link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="fonts/fonts.css">
 
     <style>
         /* ---------- Tokens ---------- */
@@ -325,8 +331,7 @@
         .field-error { font-size: 12px; color: var(--danger); }
         .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
-        .consent { grid-column: 1 / -1; display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.5; }
-        .consent input { flex: none; width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--cyan); cursor: pointer; }
+        .form-note { grid-column: 1 / -1; font-size: 13px; color: var(--muted); line-height: 1.5; }
         .link-btn { background: none; border: 0; padding: 0; color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-size: inherit; }
         .form-actions { grid-column: 1 / -1; }
 
@@ -378,7 +383,11 @@
         dialog::backdrop { background: rgba(0, 0, 0, .7); backdrop-filter: blur(4px); }
         .dialog-inner { padding: 40px; }
         .dialog-inner h2 { font-size: 26px; font-weight: 800; margin-bottom: 20px; }
-        .dialog-inner p { color: var(--muted); margin-bottom: 28px; }
+        .legal-body { margin-bottom: 32px; }
+        .legal-body h3 { font-size: 15px; font-weight: 700; color: var(--text); margin: 24px 0 6px; letter-spacing: 0; }
+        .legal-body h3:first-child { margin-top: 0; }
+        .legal-body p { color: var(--muted); font-size: 15px; white-space: pre-line; }
+        .legal-body .legal-date { margin-top: 24px; font-size: 13px; }
 
         /* ---------- Responsive ---------- */
         @media (max-width: 1024px) {
@@ -629,11 +638,10 @@ We have the code.</h2>
                                 <textarea class="input" id="f-idea" name="idea" rows="5" required placeholder="E.g. we spend hours every week answering the same customer emails..." data-i18n-ph="ph-idea" data-fs-field></textarea>
                                 <span class="field-error" data-fs-error="idea"></span>
                             </div>
-                            <label class="consent">
-                                <input type="checkbox" name="consent" value="yes" required data-fs-field>
-                                <span><span data-i18n="consent">I agree that StecStudio may process my data to answer this request.</span>
-                                (<button type="button" class="link-btn" data-open-privacy data-i18n="privacy-link">Privacy policy</button>)</span>
-                            </label>
+                            <p class="form-note">
+                                <span data-i18n="form-note">By sending the form, you acknowledge our</span>
+                                <button type="button" class="link-btn" data-open-legal="privacy" data-i18n="privacy-link">privacy policy</button><span data-i18n="form-note-end">.</span>
+                            </p>
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-primary" data-fs-submit-btn>
                                     <span data-i18n="btn-submit">Send my idea</span>
@@ -689,17 +697,18 @@ We have the code.</h2>
             </a>
             <div class="footer-meta">
                 <span>&copy; <span id="year">2026</span> StecStudio.ai · <span data-i18n="footer-rights">All rights reserved.</span></span>
-                <button type="button" class="link-btn" data-open-privacy data-i18n="footer-privacy">Privacy</button>
+                <button type="button" class="link-btn" data-open-legal="imprint" data-i18n="imprint-h">Legal notice</button>
+                <button type="button" class="link-btn" data-open-legal="privacy" data-i18n="footer-privacy">Privacy</button>
                 <a href="mailto:office@stecstudio.ai">office@stecstudio.ai</a>
             </div>
         </div>
     </footer>
 
-    <!-- Privacy policy -->
-    <dialog id="privacy" aria-labelledby="privacy-title">
+    <!-- Legal notice (Impressum) and privacy policy -->
+    <dialog id="legal" aria-labelledby="legal-title">
         <div class="dialog-inner">
-            <h2 id="privacy-title" data-i18n="privacy-h">Privacy policy</h2>
-            <p class="pre" data-i18n="privacy-body"></p>
+            <h2 id="legal-title"></h2>
+            <div id="legal-body" class="legal-body"></div>
             <form method="dialog"><button class="btn btn-primary" data-i18n="privacy-close">Close</button></form>
         </div>
     </dialog>
@@ -713,7 +722,7 @@ We have the code.</h2>
             onSuccess: function () { document.getElementById('idea-lab-form').style.display = 'none'; }
         });
     </script>
-    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+    <script src="js/formspree-ajax.js" defer></script>
 
     <!-- Translations -->
     <script>
@@ -745,7 +754,7 @@ We have the code.</h2>
                 "label-name": "Name", "label-email": "Email", "label-company": "Company (optional)", "label-idea": "Your idea or problem",
                 "ph-name": "Your name", "ph-email": "you@company.com", "ph-company": "Company name",
                 "ph-idea": "E.g. we spend hours every week answering the same customer emails...",
-                "consent": "I agree that StecStudio may process my data to answer this request.", "privacy-link": "Privacy policy",
+                "form-note": "By sending the form, you acknowledge our", "privacy-link": "privacy policy", "form-note-end": ".",
                 "btn-submit": "Send my idea",
                 "success-msg": "Thanks! Your idea has been submitted. We'll contact you shortly.",
                 "error-msg": "Oops! There was a problem submitting your form. Please try again or write to us by email.",
@@ -753,12 +762,11 @@ We have the code.</h2>
                 "q1": "How much does a project cost?", "a1": "It depends on scope. Once we understand your needs, we send you a clear estimate before any work begins.",
                 "q2": "How long does it take?", "a2": "Timelines depend on complexity. We start with a small prototype, so you see results early.",
                 "q3": "Do I need technical knowledge?", "a3": "No. We handle the technical part and explain everything in plain language.",
-                "q4": "What happens with my data?", "a4": "Your data is used only for your project. We choose GDPR-compliant solutions that, where needed, can run on your own infrastructure.",
+                "q4": "What happens with my data?", "a4": "Your data is used only for your project. We choose solutions that comply with Swiss data protection law (FADP) and the GDPR and, where needed, can run on your own infrastructure — including in Switzerland.",
                 "q5": "Can you integrate with the tools we already use?", "a5": "In most cases, yes — email, CRM, spreadsheets, online stores or internal databases.",
                 "contact-eyebrow": "Contact", "contact-h": "Let's talk about your project", "contact-p": "Write to us directly or use the form above.", "contact-btn": "Send an email",
                 "footer-rights": "All rights reserved.", "footer-privacy": "Privacy",
-                "privacy-h": "Privacy policy",
-                "privacy-body": "When you submit the Idea Lab form, we collect your name, email address, company (optional) and your message. We use this data only to reply to your request and to discuss a possible collaboration.\n\nThe form is processed through Formspree, which forwards the message to us by email. We do not sell your data and do not use it for advertising.\n\nYou can ask at any time to access, correct or delete your data by writing to office@stecstudio.ai.",
+                "privacy-h": "Privacy policy", "imprint-h": "Legal notice",
                 "privacy-close": "Close"
             },
             ro: {
@@ -788,7 +796,7 @@ We have the code.</h2>
                 "label-name": "Nume", "label-email": "Email", "label-company": "Companie (opțional)", "label-idea": "Ideea sau problema ta",
                 "ph-name": "Numele tău", "ph-email": "tu@companie.ro", "ph-company": "Numele companiei",
                 "ph-idea": "Ex.: petrecem ore în fiecare săptămână răspunzând la aceleași emailuri de la clienți...",
-                "consent": "Sunt de acord ca StecStudio să îmi prelucreze datele pentru a răspunde acestei solicitări.", "privacy-link": "Politica de confidențialitate",
+                "form-note": "Prin trimiterea formularului, iei la cunoștință", "privacy-link": "politica de confidențialitate", "form-note-end": ".",
                 "btn-submit": "Trimite ideea",
                 "success-msg": "Mulțumim! Ideea ta a fost trimisă. Te vom contacta în curând.",
                 "error-msg": "Hopa! A apărut o problemă la trimiterea formularului. Încearcă din nou sau scrie-ne pe email.",
@@ -796,12 +804,11 @@ We have the code.</h2>
                 "q1": "Cât costă un proiect?", "a1": "Depinde de complexitate. După ce înțelegem de ce ai nevoie, îți trimitem o estimare clară înainte de a începe lucrul.",
                 "q2": "Cât durează?", "a2": "Durata depinde de complexitate. Începem cu un prototip mic, ca să vezi rezultate din timp.",
                 "q3": "Am nevoie de cunoștințe tehnice?", "a3": "Nu. Ne ocupăm noi de partea tehnică și îți explicăm totul pe înțelesul tău.",
-                "q4": "Ce se întâmplă cu datele mele?", "a4": "Datele tale sunt folosite doar pentru proiectul tău. Alegem soluții care respectă GDPR și care, unde e nevoie, pot rula pe infrastructura ta.",
+                "q4": "Ce se întâmplă cu datele mele?", "a4": "Datele tale sunt folosite doar pentru proiectul tău. Alegem soluții care respectă legea elvețiană privind protecția datelor (nLPD) și GDPR și care, unde e nevoie, pot rula pe infrastructura ta — inclusiv în Elveția.",
                 "q5": "Vă puteți integra cu instrumentele pe care le folosim deja?", "a5": "În cele mai multe cazuri, da — email, CRM, tabele, magazine online sau baze de date interne.",
                 "contact-eyebrow": "Contact", "contact-h": "Hai să discutăm despre proiectul tău", "contact-p": "Scrie-ne direct sau folosește formularul de mai sus.", "contact-btn": "Trimite un email",
                 "footer-rights": "Toate drepturile rezervate.", "footer-privacy": "Confidențialitate",
-                "privacy-h": "Politica de confidențialitate",
-                "privacy-body": "Când trimiți formularul Idea Lab, colectăm numele, adresa de email, compania (opțional) și mesajul tău. Folosim aceste date doar pentru a răspunde solicitării tale și pentru a discuta o posibilă colaborare.\n\nFormularul este procesat prin Formspree, care ne transmite mesajul pe email. Nu vindem datele tale și nu le folosim în scopuri publicitare.\n\nPoți cere oricând accesul la date, corectarea sau ștergerea lor scriind la office@stecstudio.ai.",
+                "privacy-h": "Politica de confidențialitate", "imprint-h": "Informații legale",
                 "privacy-close": "Închide"
             },
             fr: {
@@ -829,9 +836,9 @@ We have the code.</h2>
                 "idealab-eyebrow": "Labo d'idées", "idealab-h": "Vous avez la vision.\nNous avons le code.",
                 "idealab-p": "Décrivez le défi auquel vous faites face ou la solution IA dont vous rêvez. Nous reviendrons vers vous avec les prochaines étapes.",
                 "label-name": "Nom", "label-email": "E-mail", "label-company": "Entreprise (facultatif)", "label-idea": "Votre idée ou problème",
-                "ph-name": "Votre nom", "ph-email": "vous@entreprise.fr", "ph-company": "Nom de l'entreprise",
+                "ph-name": "Votre nom", "ph-email": "vous@entreprise.ch", "ph-company": "Nom de l'entreprise",
                 "ph-idea": "Ex. : nous passons des heures chaque semaine à répondre aux mêmes e-mails clients...",
-                "consent": "J'accepte que StecStudio traite mes données pour répondre à cette demande.", "privacy-link": "Politique de confidentialité",
+                "form-note": "En envoyant ce formulaire, vous prenez connaissance de notre", "privacy-link": "politique de confidentialité", "form-note-end": ".",
                 "btn-submit": "Envoyer mon idée",
                 "success-msg": "Merci ! Votre idée a bien été envoyée. Nous vous contacterons bientôt.",
                 "error-msg": "Oups ! Un problème est survenu lors de l'envoi. Réessayez ou écrivez-nous par e-mail.",
@@ -839,12 +846,11 @@ We have the code.</h2>
                 "q1": "Combien coûte un projet ?", "a1": "Cela dépend de la complexité. Une fois vos besoins compris, nous vous envoyons une estimation claire avant de commencer.",
                 "q2": "Combien de temps cela prend-il ?", "a2": "La durée dépend de la complexité. Nous commençons par un petit prototype pour que vous voyiez des résultats rapidement.",
                 "q3": "Faut-il des connaissances techniques ?", "a3": "Non. Nous gérons la partie technique et vous expliquons tout simplement.",
-                "q4": "Que deviennent mes données ?", "a4": "Vos données servent uniquement à votre projet. Nous choisissons des solutions conformes au RGPD qui, si nécessaire, peuvent fonctionner sur votre propre infrastructure.",
+                "q4": "Que deviennent mes données ?", "a4": "Vos données servent uniquement à votre projet. Nous choisissons des solutions conformes à la loi suisse sur la protection des données (LPD) et au RGPD qui, si nécessaire, peuvent fonctionner sur votre propre infrastructure — y compris en Suisse.",
                 "q5": "Pouvez-vous vous connecter à nos outils actuels ?", "a5": "Dans la plupart des cas, oui — e-mail, CRM, tableurs, boutiques en ligne ou bases de données internes.",
                 "contact-eyebrow": "Contact", "contact-h": "Parlons de votre projet", "contact-p": "Écrivez-nous directement ou utilisez le formulaire ci-dessus.", "contact-btn": "Envoyer un e-mail",
                 "footer-rights": "Tous droits réservés.", "footer-privacy": "Confidentialité",
-                "privacy-h": "Politique de confidentialité",
-                "privacy-body": "Lorsque vous envoyez le formulaire du Labo d'idées, nous collectons votre nom, votre adresse e-mail, votre entreprise (facultatif) et votre message. Nous utilisons ces données uniquement pour répondre à votre demande et discuter d'une éventuelle collaboration.\n\nLe formulaire est traité par Formspree, qui nous transmet le message par e-mail. Nous ne vendons pas vos données et ne les utilisons pas à des fins publicitaires.\n\nVous pouvez à tout moment demander l'accès, la rectification ou la suppression de vos données en écrivant à office@stecstudio.ai.",
+                "privacy-h": "Politique de confidentialité", "imprint-h": "Mentions légales",
                 "privacy-close": "Fermer"
             },
             de: {
@@ -872,9 +878,9 @@ We have the code.</h2>
                 "idealab-eyebrow": "Ideen-Labor", "idealab-h": "Sie haben die Vision.\nWir haben den Code.",
                 "idealab-p": "Beschreiben Sie Ihre Herausforderung oder die KI-Lösung, von der Sie träumen. Wir melden uns mit den nächsten Schritten.",
                 "label-name": "Name", "label-email": "E-Mail", "label-company": "Unternehmen (optional)", "label-idea": "Ihre Idee oder Ihr Problem",
-                "ph-name": "Ihr Name", "ph-email": "sie@unternehmen.de", "ph-company": "Name des Unternehmens",
+                "ph-name": "Ihr Name", "ph-email": "sie@unternehmen.ch", "ph-company": "Name des Unternehmens",
                 "ph-idea": "Z. B.: Wir verbringen jede Woche Stunden damit, dieselben Kunden-E-Mails zu beantworten...",
-                "consent": "Ich bin einverstanden, dass StecStudio meine Daten zur Bearbeitung dieser Anfrage verarbeitet.", "privacy-link": "Datenschutzerklärung",
+                "form-note": "Mit dem Absenden des Formulars nehmen Sie unsere", "privacy-link": "Datenschutzerklärung", "form-note-end": " zur Kenntnis.",
                 "btn-submit": "Idee senden",
                 "success-msg": "Danke! Ihre Idee wurde gesendet. Wir melden uns in Kürze.",
                 "error-msg": "Hoppla! Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie uns eine E-Mail.",
@@ -882,13 +888,12 @@ We have the code.</h2>
                 "q1": "Was kostet ein Projekt?", "a1": "Das hängt vom Umfang ab. Sobald wir Ihren Bedarf verstehen, erhalten Sie eine klare Schätzung, bevor die Arbeit beginnt.",
                 "q2": "Wie lange dauert es?", "a2": "Die Dauer hängt von der Komplexität ab. Wir starten mit einem kleinen Prototyp, damit Sie früh Ergebnisse sehen.",
                 "q3": "Brauche ich technisches Wissen?", "a3": "Nein. Wir kümmern uns um die Technik und erklären alles verständlich.",
-                "q4": "Was passiert mit meinen Daten?", "a4": "Ihre Daten werden ausschließlich für Ihr Projekt verwendet. Wir wählen DSGVO-konforme Lösungen, die bei Bedarf auch auf Ihrer eigenen Infrastruktur laufen.",
+                "q4": "Was passiert mit meinen Daten?", "a4": "Ihre Daten werden ausschliesslich für Ihr Projekt verwendet. Wir wählen Lösungen, die dem Schweizer Datenschutzgesetz (DSG) und der DSGVO entsprechen und bei Bedarf auf Ihrer eigenen Infrastruktur laufen – auch in der Schweiz.",
                 "q5": "Können Sie unsere bestehenden Tools anbinden?", "a5": "In den meisten Fällen ja — E-Mail, CRM, Tabellen, Onlineshops oder interne Datenbanken.",
                 "contact-eyebrow": "Kontakt", "contact-h": "Lassen Sie uns über Ihr Projekt sprechen", "contact-p": "Schreiben Sie uns direkt oder nutzen Sie das Formular oben.", "contact-btn": "E-Mail senden",
                 "footer-rights": "Alle Rechte vorbehalten.", "footer-privacy": "Datenschutz",
-                "privacy-h": "Datenschutzerklärung",
-                "privacy-body": "Wenn Sie das Formular im Ideen-Labor absenden, erfassen wir Ihren Namen, Ihre E-Mail-Adresse, Ihr Unternehmen (optional) und Ihre Nachricht. Wir verwenden diese Daten ausschließlich, um Ihre Anfrage zu beantworten und eine mögliche Zusammenarbeit zu besprechen.\n\nDas Formular wird über Formspree verarbeitet, das uns die Nachricht per E-Mail weiterleitet. Wir verkaufen Ihre Daten nicht und nutzen sie nicht zu Werbezwecken.\n\nSie können jederzeit Auskunft, Berichtigung oder Löschung Ihrer Daten verlangen, indem Sie an office@stecstudio.ai schreiben.",
-                "privacy-close": "Schließen"
+                "privacy-h": "Datenschutzerklärung", "imprint-h": "Impressum",
+                "privacy-close": "Schliessen"
             },
             it: {
                 "meta-title": "StecStudio | Agenti IA e soluzioni digitali",
@@ -915,9 +920,9 @@ We have the code.</h2>
                 "idealab-eyebrow": "Lab di Idee", "idealab-h": "Tu hai la visione.\nNoi abbiamo il codice.",
                 "idealab-p": "Descrivi la sfida che stai affrontando o la soluzione IA che sogni. Ti ricontatteremo con i prossimi passi.",
                 "label-name": "Nome", "label-email": "Email", "label-company": "Azienda (facoltativo)", "label-idea": "La tua idea o il tuo problema",
-                "ph-name": "Il tuo nome", "ph-email": "tu@azienda.it", "ph-company": "Nome dell'azienda",
+                "ph-name": "Il tuo nome", "ph-email": "tu@azienda.ch", "ph-company": "Nome dell'azienda",
                 "ph-idea": "Es.: ogni settimana passiamo ore a rispondere alle stesse email dei clienti...",
-                "consent": "Acconsento al trattamento dei miei dati da parte di StecStudio per rispondere a questa richiesta.", "privacy-link": "Informativa sulla privacy",
+                "form-note": "Inviando il modulo, prendi atto della nostra", "privacy-link": "informativa sulla privacy", "form-note-end": ".",
                 "btn-submit": "Invia la mia idea",
                 "success-msg": "Grazie! La tua idea è stata inviata. Ti contatteremo a breve.",
                 "error-msg": "Ops! Si è verificato un problema nell'invio. Riprova o scrivici via email.",
@@ -925,12 +930,11 @@ We have the code.</h2>
                 "q1": "Quanto costa un progetto?", "a1": "Dipende dalla complessità. Dopo aver capito le tue esigenze, ti inviamo una stima chiara prima di iniziare.",
                 "q2": "Quanto tempo serve?", "a2": "Dipende dalla complessità. Partiamo da un piccolo prototipo, così vedi i risultati fin da subito.",
                 "q3": "Servono competenze tecniche?", "a3": "No. Ci occupiamo noi della parte tecnica e ti spieghiamo tutto in modo semplice.",
-                "q4": "Cosa succede ai miei dati?", "a4": "I tuoi dati vengono usati solo per il tuo progetto. Scegliamo soluzioni conformi al GDPR che, se necessario, possono funzionare sulla tua infrastruttura.",
+                "q4": "Cosa succede ai miei dati?", "a4": "I tuoi dati vengono usati solo per il tuo progetto. Scegliamo soluzioni conformi alla legge svizzera sulla protezione dei dati (LPD) e al GDPR che, se necessario, possono funzionare sulla tua infrastruttura — anche in Svizzera.",
                 "q5": "Potete integrarvi con gli strumenti che già usiamo?", "a5": "Nella maggior parte dei casi sì — email, CRM, fogli di calcolo, negozi online o database interni.",
                 "contact-eyebrow": "Contatti", "contact-h": "Parliamo del tuo progetto", "contact-p": "Scrivici direttamente o usa il modulo qui sopra.", "contact-btn": "Invia un'email",
                 "footer-rights": "Tutti i diritti riservati.", "footer-privacy": "Privacy",
-                "privacy-h": "Informativa sulla privacy",
-                "privacy-body": "Quando invii il modulo del Lab di Idee, raccogliamo il tuo nome, l'indirizzo email, l'azienda (facoltativa) e il tuo messaggio. Usiamo questi dati solo per rispondere alla tua richiesta e per discutere una possibile collaborazione.\n\nIl modulo è gestito tramite Formspree, che ci inoltra il messaggio via email. Non vendiamo i tuoi dati e non li usiamo per scopi pubblicitari.\n\nPuoi chiedere in qualsiasi momento l'accesso, la rettifica o la cancellazione dei tuoi dati scrivendo a office@stecstudio.ai.",
+                "privacy-h": "Informativa sulla privacy", "imprint-h": "Note legali",
                 "privacy-close": "Chiudi"
             }
         };
@@ -981,7 +985,153 @@ We have the code.</h2>
         })();
     </script>
 
-    <!-- UI: menu, nav state, reveal, privacy dialog -->
+    <!-- Legal texts: Impressum + privacy policy (Swiss FADP / nDSG, plus GDPR for EU visitors) -->
+    <script>
+        /* ======================================================================
+           COMPLETEAZĂ AICI datele firmei (exact ca în registrul comerțului).
+           Textele în paranteze pătrate apar pe site până le înlocuiești.
+           ====================================================================== */
+        const COMPANY = {
+            name: 'StecStudio, Stefan Constantinescu',
+            street: 'Avenue de la Gare 6',
+            city: '1618 Châtel-St-Denis',
+            email: 'office@stecstudio.ai',
+            manager: 'Stefan Constantinescu',
+            register: '',   // e.g. 'Registre du commerce du canton de Fribourg' – leave empty while not registered
+            uid: '',        // e.g. 'CHE-123.456.789' – leave empty while there is no UID
+            vat: ''   // MWST-Nr., only if the company is VAT-registered, e.g. 'CHE-xxx.xxx.xxx MWST'
+        };
+
+        const LEGAL = {
+            en: {
+                country: 'Switzerland', uid: 'UID: ', vat: 'VAT no.: ', date: 'Last updated: October 2026',
+                imprint: [
+                    ['Company', '{name}\n{street}\n{city}\n{country}'],
+                    ['Contact', 'Email: {email}'],
+                    ['Authorised representative', '{manager}'],
+                    ['Commercial register', '{reglines}', 'register'],
+                    ['Disclaimer', 'We take great care with the content of this website, but cannot guarantee that it is accurate, complete or up to date. The operators of external websites we link to are solely responsible for their content.'],
+                    ['Copyright', 'The texts, logo and design of this website belong to {name}. Any use beyond private purposes requires our prior written consent.']
+                ],
+                privacy: [
+                    ['Controller', '{name}, {street}, {city}, {country}\nEmail: {email}\n\nThis privacy policy applies to the website stecstudio.ai. It is based on the Swiss Federal Act on Data Protection (FADP) and, where applicable, the EU General Data Protection Regulation (GDPR).'],
+                    ['Visiting the website', 'When you visit the website, our hosting provider automatically processes technical data such as your IP address, date and time, pages visited and browser type (server logs). This data is needed to run the website securely and is deleted after a short period. We do not use cookies, tracking or analytics tools. Fonts and scripts are loaded from our own server. Your language choice is stored only in your browser (local storage).'],
+                    ['Contact form', 'When you use the Idea Lab form, we process your name, email address, company (optional) and message in order to answer your request and to prepare a possible collaboration (Art. 6(1)(b) and (f) GDPR). Providing this data is voluntary, but without it we cannot reply.'],
+                    ['Recipients and transfers abroad', 'The form is processed by Formspree Inc. (USA), which forwards your message to us by email. Your data may therefore be processed in the USA. Where a country does not provide adequate data protection, we ensure protection through recognised safeguards, such as the Swiss-U.S. Data Privacy Framework or standard contractual clauses. We do not sell your data or pass it on for advertising.'],
+                    ['Retention', 'We keep your messages for as long as needed to handle your request and any resulting collaboration, or as required by statutory retention obligations. The data is then deleted.'],
+                    ['Your rights', 'You can request information about your data and ask for it to be corrected or deleted. You can object to processing and request a copy of your data. Just write to {email}. You may also contact the Federal Data Protection and Information Commissioner (FDPIC, www.edoeb.admin.ch) or, if you live in the EU, your local data protection authority.'],
+                    ['Changes', 'We may update this privacy policy. The version published on this website applies.']
+                ]
+            },
+            de: {
+                country: 'Schweiz', uid: 'UID: ', vat: 'MWST-Nr.: ', date: 'Stand: Oktober 2026',
+                imprint: [
+                    ['Unternehmen', '{name}\n{street}\n{city}\n{country}'],
+                    ['Kontakt', 'E-Mail: {email}'],
+                    ['Vertretungsberechtigte Person', '{manager}'],
+                    ['Handelsregister', '{reglines}', 'register'],
+                    ['Haftungsausschluss', 'Wir prüfen die Inhalte dieser Website sorgfältig, übernehmen jedoch keine Gewähr für deren Richtigkeit, Vollständigkeit und Aktualität. Für die Inhalte verlinkter externer Websites sind ausschliesslich deren Betreiber verantwortlich.'],
+                    ['Urheberrechte', 'Texte, Logo und Gestaltung dieser Website gehören {name}. Jede Verwendung über den privaten Gebrauch hinaus bedarf unserer vorgängigen schriftlichen Zustimmung.']
+                ],
+                privacy: [
+                    ['Verantwortliche Stelle', '{name}, {street}, {city}, {country}\nE-Mail: {email}\n\nDiese Datenschutzerklärung gilt für die Website stecstudio.ai. Sie richtet sich nach dem Schweizer Bundesgesetz über den Datenschutz (DSG) sowie, soweit anwendbar, nach der EU-Datenschutz-Grundverordnung (DSGVO).'],
+                    ['Besuch der Website', 'Beim Aufruf der Website verarbeitet unser Hosting-Anbieter automatisch technische Daten wie IP-Adresse, Datum und Uhrzeit, aufgerufene Seiten und Browsertyp (Server-Logfiles). Diese Daten sind für den sicheren Betrieb der Website erforderlich und werden nach kurzer Zeit gelöscht. Wir verwenden keine Cookies und keine Tracking- oder Analyse-Tools. Schriften und Skripte werden von unserem eigenen Server geladen. Ihre Sprachwahl wird nur in Ihrem Browser gespeichert (Local Storage).'],
+                    ['Kontaktformular', 'Wenn Sie das Formular im Ideen-Labor nutzen, bearbeiten wir Ihren Namen, Ihre E-Mail-Adresse, Ihr Unternehmen (optional) und Ihre Nachricht, um Ihre Anfrage zu beantworten und eine mögliche Zusammenarbeit vorzubereiten (Art. 6 Abs. 1 lit. b und f DSGVO). Die Angabe ist freiwillig; ohne sie können wir jedoch nicht antworten.'],
+                    ['Empfänger und Bekanntgabe ins Ausland', 'Das Formular wird von Formspree Inc. (USA) verarbeitet, die uns Ihre Nachricht per E-Mail weiterleitet. Ihre Daten können daher in den USA bearbeitet werden. Bietet ein Staat keinen angemessenen Datenschutz, stellen wir den Schutz durch anerkannte Garantien sicher, etwa das Swiss-U.S. Data Privacy Framework oder Standardvertragsklauseln. Wir verkaufen Ihre Daten nicht und geben sie nicht zu Werbezwecken weiter.'],
+                    ['Aufbewahrung', 'Wir bewahren Ihre Nachrichten so lange auf, wie es für die Bearbeitung Ihrer Anfrage und einer allfälligen Zusammenarbeit nötig ist oder gesetzliche Aufbewahrungspflichten bestehen. Danach werden die Daten gelöscht.'],
+                    ['Ihre Rechte', 'Sie können Auskunft über Ihre Daten verlangen und deren Berichtigung oder Löschung beantragen. Sie können der Bearbeitung widersprechen und eine Kopie Ihrer Daten verlangen. Schreiben Sie uns dazu an {email}. Zudem können Sie sich an den Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB, www.edoeb.admin.ch) oder, wenn Sie in der EU wohnen, an Ihre zuständige Datenschutzbehörde wenden.'],
+                    ['Änderungen', 'Wir können diese Datenschutzerklärung anpassen. Es gilt die jeweils auf dieser Website veröffentlichte Fassung.']
+                ]
+            },
+            fr: {
+                country: 'Suisse', uid: 'IDE : ', vat: 'N° TVA : ', date: 'Dernière mise à jour : octobre 2026',
+                imprint: [
+                    ['Entreprise', '{name}\n{street}\n{city}\n{country}'],
+                    ['Contact', 'E-mail : {email}'],
+                    ['Personne autorisée à représenter', '{manager}'],
+                    ['Registre du commerce', '{reglines}', 'register'],
+                    ['Exclusion de responsabilité', 'Nous apportons le plus grand soin au contenu de ce site, mais ne pouvons garantir qu\'il soit exact, complet et à jour. Les exploitants des sites externes vers lesquels nous renvoyons sont seuls responsables de leur contenu.'],
+                    ['Droits d\'auteur', 'Les textes, le logo et le design de ce site appartiennent à {name}. Toute utilisation au-delà d\'un usage privé nécessite notre accord écrit préalable.']
+                ],
+                privacy: [
+                    ['Responsable du traitement', '{name}, {street}, {city}, {country}\nE-mail : {email}\n\nLa présente politique s\'applique au site stecstudio.ai. Elle se fonde sur la loi fédérale suisse sur la protection des données (LPD) ainsi que, le cas échéant, sur le règlement général européen sur la protection des données (RGPD).'],
+                    ['Visite du site', 'Lors de votre visite, notre hébergeur traite automatiquement des données techniques telles que l\'adresse IP, la date et l\'heure, les pages consultées et le type de navigateur (fichiers journaux). Ces données sont nécessaires au fonctionnement sécurisé du site et sont supprimées après une courte période. Nous n\'utilisons ni cookies ni outils de suivi ou d\'analyse. Les polices et scripts sont chargés depuis notre propre serveur. Votre choix de langue est enregistré uniquement dans votre navigateur (stockage local).'],
+                    ['Formulaire de contact', 'Lorsque vous utilisez le formulaire du Labo d\'idées, nous traitons votre nom, votre adresse e-mail, votre entreprise (facultatif) et votre message afin de répondre à votre demande et de préparer une éventuelle collaboration (art. 6, par. 1, let. b et f RGPD). La communication de ces données est facultative, mais sans elles nous ne pouvons pas vous répondre.'],
+                    ['Destinataires et communication à l\'étranger', 'Le formulaire est traité par Formspree Inc. (États-Unis), qui nous transmet votre message par e-mail. Vos données peuvent donc être traitées aux États-Unis. Lorsqu\'un pays n\'offre pas un niveau de protection adéquat, nous assurons la protection par des garanties reconnues, comme le Swiss-U.S. Data Privacy Framework ou des clauses contractuelles types. Nous ne vendons pas vos données et ne les transmettons pas à des fins publicitaires.'],
+                    ['Conservation', 'Nous conservons vos messages aussi longtemps que nécessaire pour traiter votre demande et une éventuelle collaboration, ou tant que des obligations légales de conservation l\'exigent. Les données sont ensuite supprimées.'],
+                    ['Vos droits', 'Vous pouvez demander l\'accès à vos données, ainsi que leur rectification ou leur suppression. Vous pouvez vous opposer au traitement et demander une copie de vos données. Il suffit de nous écrire à {email}. Vous pouvez également vous adresser au Préposé fédéral à la protection des données et à la transparence (PFPDT, www.edoeb.admin.ch) ou, si vous résidez dans l\'UE, à votre autorité de protection des données.'],
+                    ['Modifications', 'Nous pouvons adapter la présente politique. La version publiée sur ce site fait foi.']
+                ]
+            },
+            it: {
+                country: 'Svizzera', uid: 'IDI: ', vat: 'N. IVA: ', date: 'Ultimo aggiornamento: ottobre 2026',
+                imprint: [
+                    ['Azienda', '{name}\n{street}\n{city}\n{country}'],
+                    ['Contatto', 'E-mail: {email}'],
+                    ['Persona autorizzata a rappresentare', '{manager}'],
+                    ['Registro di commercio', '{reglines}', 'register'],
+                    ['Esclusione di responsabilità', 'Curiamo con attenzione i contenuti di questo sito, ma non possiamo garantirne l\'esattezza, la completezza e l\'attualità. Dei contenuti dei siti esterni collegati sono responsabili esclusivamente i rispettivi gestori.'],
+                    ['Diritti d\'autore', 'Testi, logo e design di questo sito appartengono a {name}. Qualsiasi utilizzo oltre l\'uso privato richiede il nostro previo consenso scritto.']
+                ],
+                privacy: [
+                    ['Titolare del trattamento', '{name}, {street}, {city}, {country}\nE-mail: {email}\n\nLa presente informativa si applica al sito stecstudio.ai. Si basa sulla legge federale svizzera sulla protezione dei dati (LPD) e, ove applicabile, sul regolamento generale europeo sulla protezione dei dati (GDPR).'],
+                    ['Visita del sito', 'Quando visiti il sito, il nostro provider di hosting tratta automaticamente dati tecnici come indirizzo IP, data e ora, pagine visitate e tipo di browser (file di log). Questi dati sono necessari per il funzionamento sicuro del sito e vengono cancellati dopo breve tempo. Non utilizziamo cookie né strumenti di tracciamento o di analisi. Caratteri e script vengono caricati dal nostro server. La lingua scelta viene salvata solo nel tuo browser (local storage).'],
+                    ['Modulo di contatto', 'Quando usi il modulo del Lab di Idee, trattiamo il tuo nome, l\'indirizzo e-mail, l\'azienda (facoltativa) e il tuo messaggio per rispondere alla tua richiesta e preparare una possibile collaborazione (art. 6 par. 1 lett. b e f GDPR). Il conferimento dei dati è facoltativo, ma senza di essi non possiamo risponderti.'],
+                    ['Destinatari e comunicazione all\'estero', 'Il modulo è gestito da Formspree Inc. (USA), che ci inoltra il tuo messaggio via e-mail. I tuoi dati possono quindi essere trattati negli Stati Uniti. Se un paese non garantisce una protezione adeguata, assicuriamo la tutela tramite garanzie riconosciute, come lo Swiss-U.S. Data Privacy Framework o clausole contrattuali standard. Non vendiamo i tuoi dati e non li trasmettiamo per scopi pubblicitari.'],
+                    ['Conservazione', 'Conserviamo i tuoi messaggi per il tempo necessario a gestire la tua richiesta e un\'eventuale collaborazione, o finché lo richiedono obblighi legali di conservazione. Successivamente i dati vengono cancellati.'],
+                    ['I tuoi diritti', 'Puoi chiedere l\'accesso ai tuoi dati, la loro rettifica o cancellazione. Puoi opporti al trattamento e richiedere una copia dei tuoi dati. Basta scriverci a {email}. Puoi inoltre rivolgerti all\'Incaricato federale della protezione dei dati e della trasparenza (IFPDT, www.edoeb.admin.ch) o, se risiedi nell\'UE, alla tua autorità di protezione dei dati.'],
+                    ['Modifiche', 'Possiamo aggiornare la presente informativa. Fa fede la versione pubblicata su questo sito.']
+                ]
+            },
+            ro: {
+                country: 'Elveția', uid: 'UID: ', vat: 'Nr. TVA: ', date: 'Ultima actualizare: octombrie 2026',
+                imprint: [
+                    ['Companie', '{name}\n{street}\n{city}\n{country}'],
+                    ['Contact', 'Email: {email}'],
+                    ['Persoană autorizată să reprezinte firma', '{manager}'],
+                    ['Registrul comerțului', '{reglines}', 'register'],
+                    ['Limitarea răspunderii', 'Tratăm cu grijă conținutul acestui site, dar nu putem garanta că este corect, complet și actualizat. Pentru conținutul site-urilor externe către care trimitem sunt responsabili exclusiv operatorii acestora.'],
+                    ['Drepturi de autor', 'Textele, logo-ul și designul acestui site aparțin {name}. Orice utilizare în afara scopului privat necesită acordul nostru scris prealabil.']
+                ],
+                privacy: [
+                    ['Operatorul datelor', '{name}, {street}, {city}, {country}\nEmail: {email}\n\nAceastă politică se aplică site-ului stecstudio.ai. Are la bază legea federală elvețiană privind protecția datelor (nLPD) și, unde se aplică, Regulamentul general european privind protecția datelor (GDPR).'],
+                    ['Vizitarea site-ului', 'Când vizitezi site-ul, furnizorul nostru de găzduire prelucrează automat date tehnice precum adresa IP, data și ora, paginile accesate și tipul de browser (jurnale de server). Aceste date sunt necesare pentru funcționarea sigură a site-ului și sunt șterse după o perioadă scurtă. Nu folosim cookies și nici instrumente de urmărire sau analiză. Fonturile și scripturile sunt încărcate de pe serverul nostru. Limba aleasă este salvată doar în browserul tău (local storage).'],
+                    ['Formularul de contact', 'Când folosești formularul Idea Lab, prelucrăm numele, adresa de email, compania (opțional) și mesajul tău, pentru a-ți răspunde la solicitare și a pregăti o posibilă colaborare (art. 6 alin. 1 lit. b și f GDPR). Furnizarea datelor este voluntară, dar fără ele nu îți putem răspunde.'],
+                    ['Destinatari și transfer în străinătate', 'Formularul este procesat de Formspree Inc. (SUA), care ne transmite mesajul tău pe email. Prin urmare, datele tale pot fi prelucrate în SUA. Când o țară nu oferă un nivel adecvat de protecție, asigurăm protecția prin garanții recunoscute, cum ar fi Swiss-U.S. Data Privacy Framework sau clauze contractuale standard. Nu vindem datele tale și nu le transmitem în scopuri publicitare.'],
+                    ['Păstrarea datelor', 'Păstrăm mesajele tale atât timp cât este necesar pentru a-ți soluționa solicitarea și o eventuală colaborare sau cât timp o cer obligațiile legale de arhivare. După aceea, datele sunt șterse.'],
+                    ['Drepturile tale', 'Poți cere acces la datele tale, corectarea sau ștergerea lor. Te poți opune prelucrării și poți cere o copie a datelor. Este suficient să ne scrii la {email}. De asemenea, te poți adresa Comisarului federal pentru protecția datelor și transparență (PFPDT/EDÖB, www.edoeb.admin.ch) sau, dacă locuiești în UE, autorității de protecție a datelor din țara ta.'],
+                    ['Modificări', 'Putem actualiza această politică. Este valabilă versiunea publicată pe acest site.']
+                ]
+            }
+        };
+
+        function renderLegal(doc) {
+            const lang = LEGAL[document.documentElement.lang] ? document.documentElement.lang : 'en';
+            const L = LEGAL[lang];
+            const values = Object.assign({}, COMPANY, {
+                country: L.country,
+                vatline: COMPANY.vat ? '\n' + L.vat + COMPANY.vat : '',
+                reglines: [COMPANY.register, COMPANY.uid && L.uid + COMPANY.uid, COMPANY.vat && L.vat + COMPANY.vat]
+                    .filter(Boolean).join('\n')
+            });
+            const fill = text => text.replace(/\{(\w+)\}/g, (m, k) => (k in values ? values[k] : m));
+            document.getElementById('legal-title').textContent = I18N[lang][doc === 'privacy' ? 'privacy-h' : 'imprint-h'];
+            const body = document.getElementById('legal-body');
+            body.replaceChildren();
+            L[doc].forEach(([heading, text, needs]) => {
+                if (needs === 'register' && !COMPANY.register && !COMPANY.uid && !COMPANY.vat) return;
+                const h = document.createElement('h3'); h.textContent = heading;
+                const p = document.createElement('p'); p.textContent = fill(text);
+                body.append(h, p);
+            });
+            if (doc === 'privacy') {
+                const d = document.createElement('p'); d.className = 'legal-date'; d.textContent = L.date;
+                body.append(d);
+            }
+        }
+    </script>
+
+    <!-- UI: menu, nav state, reveal, legal dialog -->
     <script>
         (() => {
             document.getElementById('year').textContent = new Date().getFullYear();
@@ -1035,9 +1185,11 @@ We have the code.</h2>
                 });
             }
 
-            // Privacy dialog
-            const dialog = document.getElementById('privacy');
-            document.querySelectorAll('[data-open-privacy]').forEach(btn => btn.addEventListener('click', () => {
+            // Legal dialog (Impressum / privacy policy)
+            const dialog = document.getElementById('legal');
+            document.querySelectorAll('[data-open-legal]').forEach(btn => btn.addEventListener('click', () => {
+                renderLegal(btn.dataset.openLegal);
+                dialog.scrollTop = 0;
                 if (typeof dialog.showModal === 'function') dialog.showModal();
                 else dialog.setAttribute('open', '');
             }));
