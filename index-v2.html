@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StecStudio | AI Agents &amp; Digital Solutions</title>
+    <meta name="description" content="StecStudio builds custom AI agents, web platforms and automations for businesses.">
+    <meta name="theme-color" content="#050608">
+
+    <!-- Social share preview (Facebook, LinkedIn, WhatsApp) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="StecStudio | AI Agents &amp; Digital Solutions">
+    <meta property="og:description" content="Custom AI agents, web platforms and automations for businesses.">
+    <meta property="og:image" content="logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 103 134'%3E%3Cpolyline points='85,36 54,16 14,40 14,56 46,76' fill='none' stroke='%23f4f6f9' stroke-width='22' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='60,50 89,69 89,93 51,118 14,93 14,83' fill='none' stroke='%2309cdd2' stroke-width='22' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ---------- Tokens ---------- */
+        :root {
+            --bg: #050608;
+            --surface: #0a0e15;
+            --surface-2: #0f1520;
+            --line: rgba(255, 255, 255, .08);
+            --line-strong: rgba(255, 255, 255, .16);
+            --text: #f2f4f7;
+            --muted: #a1a9b7;
+            --cyan: #09cdd2;
+            --cyan-soft: rgba(9, 205, 210, .1);
+            --cyan-line: rgba(9, 205, 210, .3);
+            --navy: #0f264b;
+            --danger: #f87171;
+            --radius: 22px;
+            --font-display: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --nav-h: 80px;
+            --ease: cubic-bezier(.2, .7, .2, 1);
+        }
+
+        /* ---------- Base ---------- */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); -webkit-text-size-adjust: 100%; }
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        img, svg { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+        button, input, textarea, select { font: inherit; color: inherit; }
+        h1, h2, h3 { font-family: var(--font-display); margin: 0; line-height: 1.1; letter-spacing: -.02em; }
+        p { margin: 0; }
+        ul { margin: 0; padding: 0; list-style: none; }
+        .pre { white-space: pre-line; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        :focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; border-radius: 6px; }
+
+        .skip-link {
+            position: absolute; left: 16px; top: -100px; z-index: 100;
+            background: var(--cyan); color: #000; padding: 10px 18px; border-radius: 999px; font-weight: 600;
+        }
+        .skip-link:focus { top: 16px; }
+
+        /* ---------- Buttons ---------- */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 18px 34px; border-radius: 999px; border: 1px solid transparent;
+            font-family: var(--font-display); font-weight: 700; font-size: 12px;
+            letter-spacing: .16em; text-transform: uppercase; cursor: pointer;
+            transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s, color .25s, border-color .25s;
+        }
+        .btn svg { width: 16px; height: 16px; transition: transform .25s var(--ease); }
+        .btn-primary { background: var(--cyan); color: #001314; box-shadow: 0 0 24px rgba(9, 205, 210, .22); }
+        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 0 40px rgba(9, 205, 210, .42); }
+        .btn-primary:hover:not(:disabled) svg { transform: translateX(3px); }
+        .btn-primary:disabled { opacity: .55; cursor: not-allowed; }
+        .btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--text); }
+        .btn-ghost:hover { background: var(--text); color: #000; }
+
+        /* ---------- Brand lockup (matches the logo) ---------- */
+        .brand { display: inline-flex; align-items: center; gap: 12px; }
+        .brand svg { width: 34px; height: auto; flex: none; }
+        .wordmark { display: flex; flex-direction: column; font-family: var(--font-display); line-height: 1; }
+        .wordmark b { font-weight: 800; font-size: 22px; letter-spacing: .02em; }
+        .wordmark span { font-weight: 400; font-size: 9.5px; letter-spacing: .58em; margin-top: 5px; color: var(--text); }
+
+        /* Logo hover: pulsing turquoise glow around the lettering and mark */
+        .brand .wordmark b, .brand .wordmark span { transition: text-shadow .4s ease; }
+        .brand svg { transition: filter .4s ease; }
+        .brand:hover .wordmark b, .brand:hover .wordmark span,
+        .brand:focus-visible .wordmark b, .brand:focus-visible .wordmark span {
+            text-shadow: 0 0 8px rgba(9, 205, 210, .7), 0 0 20px rgba(9, 205, 210, .35);
+        }
+        .brand:hover svg, .brand:focus-visible svg { filter: drop-shadow(0 0 6px rgba(9, 205, 210, .6)); }
+        @media (prefers-reduced-motion: no-preference) {
+            .brand:hover .wordmark b, .brand:hover .wordmark span,
+            .brand:focus-visible .wordmark b, .brand:focus-visible .wordmark span { animation: brand-glow 1.8s ease-in-out infinite; }
+            .brand:hover svg, .brand:focus-visible svg { animation: brand-glow-mark 1.8s ease-in-out infinite; }
+        }
+        @keyframes brand-glow {
+            0%, 100% { text-shadow: 0 0 6px rgba(9, 205, 210, .45), 0 0 14px rgba(9, 205, 210, .2); }
+            50% { text-shadow: 0 0 10px rgba(9, 205, 210, .95), 0 0 28px rgba(9, 205, 210, .55); }
+        }
+        @keyframes brand-glow-mark {
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(9, 205, 210, .4)); }
+            50% { filter: drop-shadow(0 0 10px rgba(9, 205, 210, .85)); }
+        }
+
+        /* ---------- Navigation ---------- */
+        .nav {
+            position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--nav-h);
+            background: rgba(5, 6, 8, .72);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid transparent;
+            transition: border-color .3s, background .3s;
+        }
+        .nav.is-scrolled { border-bottom-color: var(--line); background: rgba(5, 6, 8, .9); }
+        .nav .container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .nav-right { display: flex; align-items: center; gap: 28px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a {
+            position: relative; font-family: var(--font-display); font-size: 11px; font-weight: 700;
+            letter-spacing: .2em; text-transform: uppercase; color: var(--muted); transition: color .2s;
+        }
+        .nav-links a::after {
+            content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px;
+            background: var(--cyan); transform: scaleX(0); transition: transform .25s var(--ease);
+        }
+        .nav-links a:hover, .nav-links a.is-active { color: var(--text); }
+        .nav-links a:hover::after, .nav-links a.is-active::after { transform: scaleX(1); }
+
+        .lang-select {
+            appearance: none; -webkit-appearance: none;
+            background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a1a9b7' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center / 12px;
+            border: 1px solid var(--line-strong); border-radius: 999px;
+            padding: 9px 34px 9px 16px; font-size: 11px; font-weight: 600; letter-spacing: .12em;
+            text-transform: uppercase; cursor: pointer; transition: border-color .2s;
+        }
+        .lang-select:hover { border-color: var(--cyan); }
+        .lang-select option { background: var(--surface); color: var(--text); }
+
+        .menu-toggle {
+            display: none; width: 44px; height: 44px; border-radius: 12px;
+            background: transparent; border: 1px solid var(--line-strong); cursor: pointer;
+            align-items: center; justify-content: center;
+        }
+        .menu-toggle span, .menu-toggle span::before, .menu-toggle span::after {
+            display: block; width: 18px; height: 2px; background: var(--text); border-radius: 2px;
+            position: relative; transition: transform .25s var(--ease), background .2s;
+        }
+        .menu-toggle span::before, .menu-toggle span::after { content: ""; position: absolute; left: 0; }
+        .menu-toggle span::before { top: -6px; }
+        .menu-toggle span::after { top: 6px; }
+        .menu-toggle[aria-expanded="true"] span { background: transparent; }
+        .menu-toggle[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
+        .menu-toggle[aria-expanded="true"] span::after { transform: translateY(-6px) rotate(-45deg); }
+
+        @media (max-width: 900px) {
+            :root { --nav-h: 70px; }
+            .menu-toggle { display: inline-flex; }
+            .nav-right { gap: 12px; }
+            .nav-links {
+                position: absolute; top: var(--nav-h); left: 0; right: 0;
+                flex-direction: column; gap: 0; padding: 8px 24px 24px;
+                background: rgba(5, 6, 8, .97); border-bottom: 1px solid var(--line);
+                visibility: hidden; opacity: 0; transform: translateY(-8px);
+                transition: opacity .25s, transform .25s var(--ease), visibility .25s;
+            }
+            .nav-links.is-open { visibility: visible; opacity: 1; transform: none; }
+            .nav-links a { padding: 16px 0; font-size: 13px; border-bottom: 1px solid var(--line); }
+            .nav-links a::after { display: none; }
+        }
+
+        /* ---------- Sections ---------- */
+        section { position: relative; }
+        .section { padding: 120px 0; }
+        .section-head { max-width: 720px; margin-bottom: 64px; }
+        .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px;
+            font-family: var(--font-display); font-size: 11px; font-weight: 700;
+            letter-spacing: .32em; text-transform: uppercase; color: var(--cyan);
+        }
+        .eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--cyan); }
+        .section-head.center .eyebrow::after { content: ""; width: 24px; height: 1px; background: var(--cyan); }
+        .h2 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; }
+        .lead { color: var(--muted); font-size: 18px; font-weight: 300; margin-top: 20px; }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            min-height: 100vh; min-height: 100svh;
+            display: flex; align-items: center;
+            padding: calc(var(--nav-h) + 80px) 0 100px; text-align: center; overflow: hidden;
+        }
+        .hero::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background-image: radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px);
+            background-size: 28px 28px;
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 20%, transparent 75%);
+                    mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 20%, transparent 75%);
+        }
+        .hero-glow {
+            position: absolute; top: 50%; left: 50%; width: 640px; height: 640px; max-width: 120vw;
+            transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none;
+            background: radial-gradient(circle, rgba(9, 205, 210, .16), rgba(15, 38, 75, .12) 45%, transparent 70%);
+            filter: blur(40px);
+        }
+        .hero .container { position: relative; z-index: 1; max-width: 960px; }
+        .badge {
+            display: inline-block; padding: 9px 20px; margin-bottom: 36px;
+            border: 1px solid var(--cyan-line); border-radius: 999px; background: var(--cyan-soft);
+            color: var(--cyan); font-family: var(--font-display); font-size: 11px; font-weight: 700;
+            letter-spacing: .3em; text-transform: uppercase;
+        }
+        .hero h1 { font-size: clamp(44px, 8.5vw, 96px); font-weight: 900; letter-spacing: -.035em; line-height: 1.02; margin-bottom: 32px; }
+        .hero h1 span { display: block; }
+        .text-gradient {
+            background: linear-gradient(90deg, var(--cyan), #8ff3f5 55%, #ffffff);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            padding-bottom: .08em;
+        }
+        .hero p { color: var(--muted); font-size: clamp(17px, 2vw, 20px); font-weight: 300; max-width: 680px; margin: 0 auto 48px; }
+        .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+        .scroll-cue {
+            position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+            width: 24px; height: 38px; border: 1.5px solid var(--line-strong); border-radius: 14px; z-index: 1;
+        }
+        .scroll-cue::after {
+            content: ""; position: absolute; left: 50%; top: 8px; width: 3px; height: 7px;
+            margin-left: -1.5px; border-radius: 2px; background: var(--cyan);
+        }
+
+        /* ---------- Services ---------- */
+        .services { border-top: 1px solid var(--line); }
+        .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .card {
+            position: relative; padding: 40px 32px; border-radius: var(--radius);
+            background: linear-gradient(180deg, var(--surface-2), var(--surface));
+            border: 1px solid var(--line);
+            transition: transform .35s var(--ease), border-color .35s, box-shadow .35s;
+        }
+        .card::before {
+            content: ""; position: absolute; inset: 0 0 auto; height: 1px; border-radius: var(--radius) var(--radius) 0 0;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent); opacity: 0; transition: opacity .35s;
+        }
+        .hex { width: 72px; height: 72px; margin-bottom: 28px; color: var(--cyan); }
+        .card h3 { font-size: 24px; font-weight: 700; margin-bottom: 14px; }
+        .card > p { color: var(--muted); font-size: 15px; margin-bottom: 26px; }
+        .card ul { border-top: 1px solid var(--line); padding-top: 22px; display: grid; gap: 12px; }
+        .card li { position: relative; padding-left: 26px; font-size: 14px; color: var(--text); }
+        .card li::before {
+            content: ""; position: absolute; left: 0; top: .5em; width: 10px; height: 10px;
+            clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); background: var(--cyan);
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .card:hover { transform: translateY(-6px); border-color: var(--cyan-line); box-shadow: 0 24px 60px -30px rgba(9, 205, 210, .35); }
+            .card:hover::before { opacity: 1; }
+            .card:hover .hex { --hex-fill: rgba(9, 205, 210, .18); --hex-stroke: var(--cyan); }
+        }
+
+        /* ---------- Process ---------- */
+        .process { background: linear-gradient(180deg, transparent, rgba(15, 38, 75, .14), transparent); }
+        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: step; position: relative; }
+        .steps::before {
+            content: ""; position: absolute; top: 28px; left: 28px; right: 28px; height: 1px;
+            background: linear-gradient(90deg, var(--cyan-line), var(--line) 80%);
+        }
+        .step { position: relative; }
+        .step-num {
+            position: relative; display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 28px;
+            font-family: var(--font-display); font-weight: 800; font-size: 15px; color: var(--cyan); isolation: isolate;
+        }
+        .step-num span { position: relative; }
+        .step-num::before {
+            content: ""; position: absolute; inset: 0; z-index: -1; background: var(--bg);
+            clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+        }
+        .step-num svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .step h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+        .step p { color: var(--muted); font-size: 15px; }
+
+        /* ---------- Idea Lab ---------- */
+        .lab-box {
+            position: relative; overflow: hidden;
+            display: grid; grid-template-columns: 5fr 7fr; gap: 64px;
+            padding: 72px; border-radius: 40px; border: 1px solid var(--line);
+            background: linear-gradient(160deg, rgba(15, 38, 75, .45), rgba(10, 14, 21, .6) 55%);
+        }
+        .lab-box::after {
+            content: ""; position: absolute; right: -160px; top: -160px; width: 420px; height: 420px;
+            border-radius: 50%; background: radial-gradient(circle, rgba(9, 205, 210, .14), transparent 70%); pointer-events: none;
+        }
+        .lab-intro { position: relative; z-index: 1; }
+        .lab-intro .h2 { font-size: clamp(32px, 4.2vw, 46px); }
+        .lab-contact { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--line); display: grid; gap: 14px; }
+        .lab-contact a { display: inline-flex; align-items: center; gap: 12px; color: var(--muted); font-size: 15px; transition: color .2s; }
+        .lab-contact a:hover { color: var(--cyan); }
+        .lab-contact svg { width: 18px; height: 18px; color: var(--cyan); }
+
+        .form-wrap { position: relative; z-index: 1; }
+        .form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .field { display: flex; flex-direction: column; gap: 8px; }
+        .field.full { grid-column: 1 / -1; }
+        .field label { font-size: 13px; font-weight: 500; color: var(--muted); }
+        .input {
+            width: 100%; padding: 16px 20px; border-radius: 16px;
+            background: rgba(5, 6, 8, .55); border: 1px solid var(--line-strong);
+            transition: border-color .2s, background .2s, box-shadow .2s;
+        }
+        .input::placeholder { color: #6b7483; }
+        .input:hover { border-color: rgba(255, 255, 255, .26); }
+        .input:focus { outline: none; border-color: var(--cyan); background: rgba(15, 38, 75, .35); box-shadow: 0 0 0 4px rgba(9, 205, 210, .12); }
+        textarea.input { resize: vertical; min-height: 140px; }
+        .field-error { font-size: 12px; color: var(--danger); }
+        .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+        .consent { grid-column: 1 / -1; display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.5; }
+        .consent input { flex: none; width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--cyan); cursor: pointer; }
+        .link-btn { background: none; border: 0; padding: 0; color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-size: inherit; }
+        .form-actions { grid-column: 1 / -1; }
+
+        [data-fs-success], [data-fs-error] { display: none; }
+        .form-alert { padding: 20px 24px; border-radius: 16px; margin-bottom: 24px; font-weight: 600; }
+        .form-alert.success { background: var(--cyan-soft); border: 1px solid var(--cyan); color: var(--cyan); }
+        .form-alert.error { background: rgba(248, 113, 113, .1); border: 1px solid var(--danger); color: var(--danger); }
+
+        /* ---------- FAQ ---------- */
+        .faq-list { max-width: 820px; margin: 0 auto; border-top: 1px solid var(--line); }
+        .faq-list details { border-bottom: 1px solid var(--line); }
+        .faq-list summary {
+            list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px;
+            padding: 26px 4px; font-family: var(--font-display); font-weight: 600; font-size: 18px; transition: color .2s;
+        }
+        .faq-list summary::-webkit-details-marker { display: none; }
+        .faq-list summary:hover { color: var(--cyan); }
+        .faq-icon { flex: none; position: relative; width: 28px; height: 28px; border: 1px solid var(--line-strong); border-radius: 50%; }
+        .faq-icon::before, .faq-icon::after {
+            content: ""; position: absolute; top: 50%; left: 50%; width: 10px; height: 1.5px; margin: -.75px 0 0 -5px;
+            background: var(--cyan); transition: transform .25s var(--ease);
+        }
+        .faq-icon::after { transform: rotate(90deg); }
+        details[open] .faq-icon::after { transform: rotate(0); }
+        .faq-list details p { padding: 0 52px 26px 4px; color: var(--muted); }
+
+        /* ---------- Contact ---------- */
+        .contact-card {
+            text-align: center; padding: 80px 32px; border-radius: 40px; border: 1px solid var(--cyan-line);
+            background: radial-gradient(ellipse at 50% 0%, rgba(9, 205, 210, .14), transparent 65%), var(--surface);
+        }
+        .contact-card .eyebrow::after { content: ""; width: 24px; height: 1px; background: var(--cyan); }
+        .contact-card .lead { max-width: 520px; margin: 20px auto 40px; }
+        .contact-email { display: block; margin-top: 22px; color: var(--muted); font-size: 15px; }
+        .contact-email:hover { color: var(--cyan); }
+
+        /* ---------- Footer ---------- */
+        .footer { padding: 56px 0 40px; border-top: 1px solid var(--line); }
+        .footer .container { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+        .footer-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+        .footer-meta a, .footer-meta .link-btn { color: var(--muted); text-decoration: none; }
+        .footer-meta a:hover, .footer-meta .link-btn:hover { color: var(--cyan); }
+
+        /* ---------- Privacy dialog ---------- */
+        dialog {
+            width: min(640px, calc(100vw - 32px)); max-height: 85vh; padding: 0;
+            border: 1px solid var(--line-strong); border-radius: 24px; background: var(--surface-2); color: var(--text);
+        }
+        dialog::backdrop { background: rgba(0, 0, 0, .7); backdrop-filter: blur(4px); }
+        .dialog-inner { padding: 40px; }
+        .dialog-inner h2 { font-size: 26px; font-weight: 800; margin-bottom: 20px; }
+        .dialog-inner p { color: var(--muted); margin-bottom: 28px; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 1024px) {
+            .lab-box { grid-template-columns: 1fr; gap: 48px; padding: 56px 40px; }
+        }
+        @media (max-width: 900px) {
+            .cards { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
+            .steps { grid-template-columns: 1fr 1fr; gap: 40px 24px; }
+            .steps::before { display: none; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0 16px; }
+            .section { padding: 88px 0; }
+            .section-head { margin-bottom: 44px; }
+            .brand svg { width: 28px; }
+            .wordmark b { font-size: 19px; }
+            .wordmark span { font-size: 8px; }
+            .lang-select { padding: 8px 28px 8px 12px; background-position: right 9px center; }
+            .hero-actions .btn { width: 100%; }
+            .scroll-cue { display: none; }
+            .card { padding: 32px 24px; }
+            .steps { grid-template-columns: 1fr; }
+            .lab-box { padding: 36px 20px; border-radius: 28px; }
+            .form { grid-template-columns: 1fr; }
+            .form-actions .btn { width: 100%; }
+            .faq-list summary { font-size: 16px; }
+            .faq-list details p { padding-right: 4px; }
+            .contact-card { padding: 56px 20px; border-radius: 28px; }
+            .contact-card .btn { width: 100%; }
+            .footer .container { flex-direction: column; text-align: center; }
+            .footer-meta { justify-content: center; }
+            .dialog-inner { padding: 28px 22px; }
+        }
+
+        /* ---------- Motion (only when welcome) ---------- */
+        @media (prefers-reduced-motion: no-preference) {
+            .hero-enter { animation: enter .8s var(--ease) both; }
+            .d1 { animation-delay: .1s; } .d2 { animation-delay: .22s; } .d3 { animation-delay: .34s; }
+            .hero-glow { animation: glow 14s ease-in-out infinite; }
+            .scroll-cue::after { animation: cue 1.8s ease-in-out infinite; }
+            .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: var(--delay, 0ms); }
+            .js .reveal.is-visible { opacity: 1; transform: none; }
+        }
+        @keyframes enter { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+        @keyframes glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: .8; }
+            50% { transform: translate(-46%, -54%) scale(1.1); opacity: 1; }
+        }
+        @keyframes cue { 0% { opacity: 0; transform: translateY(0); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+    </style>
+    <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+    <!-- Brand mark, drawn as SVG so it stays sharp and has no black box behind it -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="stec-mark" viewBox="0 0 103 134">
+            <polyline points="85,36 54,16 14,40 14,56 46,76" fill="none" stroke="#f4f6f9" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="60,50 89,69 89,93 51,118 14,93 14,83" fill="none" stroke="#09cdd2" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="hex-shape" viewBox="0 0 72 72">
+            <path d="M36 3 L65 19.5 V52.5 L36 69 L7 52.5 V19.5 Z" stroke-linejoin="round" style="fill: var(--hex-fill, rgba(9,205,210,.1)); stroke: var(--hex-stroke, rgba(9,205,210,.3)); stroke-width: 1.5; transition: fill .35s, stroke .35s"/>
+        </symbol>
+    </svg>
+
+    <a href="#main" class="skip-link" data-i18n="skip">Skip to content</a>
+
+    <!-- Navigation -->
+    <header class="nav" id="nav">
+        <div class="container">
+            <a href="#top" class="brand" aria-label="StecStudio">
+                <svg viewBox="0 0 103 134" aria-hidden="true"><use href="#stec-mark"/></svg>
+                <span class="wordmark" aria-hidden="true"><b>STEC</b><span>STUDIO</span></span>
+            </a>
+            <div class="nav-right">
+                <nav class="nav-links" id="site-menu" aria-label="Main">
+                    <a href="#services" data-i18n="nav-services">Services</a>
+                    <a href="#process" data-i18n="nav-process">Process</a>
+                    <a href="#idea-lab" data-i18n="nav-idealab">Idea Lab</a>
+                    <a href="#faq" data-i18n="nav-faq">FAQ</a>
+                    <a href="#contact" data-i18n="nav-contact">Contact</a>
+                </nav>
+                <select id="lang-select" class="lang-select" aria-label="Language" data-i18n-aria="lang">
+                    <option value="en">EN</option>
+                    <option value="fr">FR</option>
+                    <option value="de">DE</option>
+                    <option value="it">IT</option>
+                    <option value="ro">RO</option>
+                </select>
+                <button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Open menu" data-i18n-aria="menu"><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero" id="top">
+            <div class="hero-glow" aria-hidden="true"></div>
+            <div class="container">
+                <div class="badge hero-enter" data-i18n="hero-badge">AI Agents · Web · Automation</div>
+                <h1 class="hero-enter d1">
+                    <span data-i18n="hero-title">Elevating Businesses</span>
+                    <span class="text-gradient" data-i18n="hero-subtitle">Through AI Agents</span>
+                </h1>
+                <p class="hero-enter d2" data-i18n="hero-description">We design AI agents, web platforms and automations that take repetitive work off your team — built around your data and your processes.</p>
+                <div class="hero-actions hero-enter d3">
+                    <a href="#idea-lab" class="btn btn-primary">
+                        <span data-i18n="btn-start">Submit your idea</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="#services" class="btn btn-ghost" data-i18n="btn-view">Our solutions</a>
+                </div>
+            </div>
+            <a href="#services" class="scroll-cue" aria-hidden="true" tabindex="-1"></a>
+        </section>
+
+        <!-- Services -->
+        <section class="section services" id="services">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="eyebrow" data-i18n="services-eyebrow">What we build</div>
+                    <h2 class="h2" data-i18n="services-h">Practical AI, built for your business</h2>
+                    <p class="lead" data-i18n="services-p">Every solution is designed around a real problem — not around a trend.</p>
+                </div>
+                <div class="cards">
+                    <article class="card reveal">
+                        <svg class="hex" viewBox="0 0 72 72" aria-hidden="true">
+                            <use href="#hex-shape"/>
+                            <svg x="22" y="22" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </svg>
+                        <h3 data-i18n="s1-h">AI Ecosystems</h3>
+                        <p data-i18n="s1-p">Custom LLM solutions that turn your internal documents and data into answers your team can use.</p>
+                        <ul>
+                            <li data-i18n="s1-l1">Internal assistant trained on your documents</li>
+                            <li data-i18n="s1-l2">Smart search across files, emails and databases</li>
+                            <li data-i18n="s1-l3">Automatic reports and summaries</li>
+                        </ul>
+                    </article>
+                    <article class="card reveal">
+                        <svg class="hex" viewBox="0 0 72 72" aria-hidden="true">
+                            <use href="#hex-shape"/>
+                            <svg x="22" y="22" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                        </svg>
+                        <h3 data-i18n="s2-h">Digital Interfaces</h3>
+                        <p data-i18n="s2-p">Fast, modern websites and web apps with AI built into the experience.</p>
+                        <ul>
+                            <li data-i18n="s2-l1">Presentation websites and landing pages</li>
+                            <li data-i18n="s2-l2">Client portals and dashboards</li>
+                            <li data-i18n="s2-l3">AI chat for customer support, 24/7</li>
+                        </ul>
+                    </article>
+                    <article class="card reveal">
+                        <svg class="hex" viewBox="0 0 72 72" aria-hidden="true">
+                            <use href="#hex-shape"/>
+                            <svg x="22" y="22" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+                        </svg>
+                        <h3 data-i18n="s3-h">Autonomous Agents</h3>
+                        <p data-i18n="s3-p">Agents that execute complete workflows — from receiving a request to finishing the task.</p>
+                        <ul>
+                            <li data-i18n="s3-l1">Email processing and lead qualification</li>
+                            <li data-i18n="s3-l2">Automatic data entry from invoices and documents</li>
+                            <li data-i18n="s3-l3">Integrations between the tools you already use</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process -->
+        <section class="section process" id="process">
+            <div class="container">
+                <div class="section-head reveal">
+                    <div class="eyebrow" data-i18n="process-eyebrow">How we work</div>
+                    <h2 class="h2" data-i18n="process-h">From idea to working product</h2>
+                </div>
+                <ol class="steps" style="list-style:none;margin:0;padding:0">
+                    <li class="step reveal">
+                        <div class="step-num"><svg viewBox="0 0 72 72" aria-hidden="true"><use href="#hex-shape"/></svg><span>01</span></div>
+                        <h3 data-i18n="p1-h">Discovery</h3>
+                        <p data-i18n="p1-p">We talk about your goals, your processes and where time is lost.</p>
+                    </li>
+                    <li class="step reveal">
+                        <div class="step-num"><svg viewBox="0 0 72 72" aria-hidden="true"><use href="#hex-shape"/></svg><span>02</span></div>
+                        <h3 data-i18n="p2-h">Prototype</h3>
+                        <p data-i18n="p2-p">We build a first working version so you can test the idea quickly.</p>
+                    </li>
+                    <li class="step reveal">
+                        <div class="step-num"><svg viewBox="0 0 72 72" aria-hidden="true"><use href="#hex-shape"/></svg><span>03</span></div>
+                        <h3 data-i18n="p3-h">Build</h3>
+                        <p data-i18n="p3-p">We develop, integrate and test the complete solution with your team.</p>
+                    </li>
+                    <li class="step reveal">
+                        <div class="step-num"><svg viewBox="0 0 72 72" aria-hidden="true"><use href="#hex-shape"/></svg><span>04</span></div>
+                        <h3 data-i18n="p4-h">Support</h3>
+                        <p data-i18n="p4-p">We monitor, improve and adapt the solution as your business grows.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Idea Lab -->
+        <section class="section" id="idea-lab">
+            <div class="container">
+                <div class="lab-box reveal">
+                    <div class="lab-intro">
+                        <div class="eyebrow" data-i18n="idealab-eyebrow">Idea Lab</div>
+                        <h2 class="h2 pre" data-i18n="idealab-h">You have the vision.
+We have the code.</h2>
+                        <p class="lead" data-i18n="idealab-p">Describe the challenge you're facing or the AI solution you're dreaming of. We'll get back to you with next steps.</p>
+                        <div class="lab-contact">
+                            <a href="mailto:office@stecstudio.ai">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6" stroke-linejoin="round"/></svg>
+                                office@stecstudio.ai
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="form-wrap">
+                        <div class="form-alert success" data-fs-success role="status" data-i18n="success-msg">Thanks! Your idea has been submitted. We'll contact you shortly.</div>
+                        <div class="form-alert error" data-fs-error role="alert" data-i18n="error-msg">Oops! There was a problem submitting your form. Please try again or write to us by email.</div>
+
+                        <form id="idea-lab-form" class="form">
+                            <input type="hidden" name="_subject" value="New Idea Lab submission – StecStudio">
+                            <div class="hp" aria-hidden="true">
+                                <label for="f-gotcha">Leave empty</label>
+                                <input type="text" id="f-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+                            </div>
+
+                            <div class="field">
+                                <label for="f-name" data-i18n="label-name">Name</label>
+                                <input class="input" type="text" id="f-name" name="name" required autocomplete="name" placeholder="Your name" data-i18n-ph="ph-name" data-fs-field>
+                                <span class="field-error" data-fs-error="name"></span>
+                            </div>
+                            <div class="field">
+                                <label for="f-email" data-i18n="label-email">Email</label>
+                                <input class="input" type="email" id="f-email" name="email" required autocomplete="email" placeholder="you@company.com" data-i18n-ph="ph-email" data-fs-field>
+                                <span class="field-error" data-fs-error="email"></span>
+                            </div>
+                            <div class="field full">
+                                <label for="f-company" data-i18n="label-company">Company (optional)</label>
+                                <input class="input" type="text" id="f-company" name="company" autocomplete="organization" placeholder="Company name" data-i18n-ph="ph-company" data-fs-field>
+                            </div>
+                            <div class="field full">
+                                <label for="f-idea" data-i18n="label-idea">Your idea or problem</label>
+                                <textarea class="input" id="f-idea" name="idea" rows="5" required placeholder="E.g. we spend hours every week answering the same customer emails..." data-i18n-ph="ph-idea" data-fs-field></textarea>
+                                <span class="field-error" data-fs-error="idea"></span>
+                            </div>
+                            <label class="consent">
+                                <input type="checkbox" name="consent" value="yes" required data-fs-field>
+                                <span><span data-i18n="consent">I agree that StecStudio may process my data to answer this request.</span>
+                                (<button type="button" class="link-btn" data-open-privacy data-i18n="privacy-link">Privacy policy</button>)</span>
+                            </label>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" data-fs-submit-btn>
+                                    <span data-i18n="btn-submit">Send my idea</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq">
+            <div class="container">
+                <div class="section-head center reveal">
+                    <div class="eyebrow" data-i18n="faq-eyebrow">FAQ</div>
+                    <h2 class="h2" data-i18n="faq-h">Frequently asked questions</h2>
+                </div>
+                <div class="faq-list reveal">
+                    <details><summary><span data-i18n="q1">How much does a project cost?</span><span class="faq-icon" aria-hidden="true"></span></summary><p data-i18n="a1">It depends on scope. Once we understand your needs, we send you a clear estimate before any work begins.</p></details>
+                    <details><summary><span data-i18n="q2">How long does it take?</span><span class="faq-icon" aria-hidden="true"></span></summary><p data-i18n="a2">Timelines depend on complexity. We start with a small prototype, so you see results early.</p></details>
+                    <details><summary><span data-i18n="q3">Do I need technical knowledge?</span><span class="faq-icon" aria-hidden="true"></span></summary><p data-i18n="a3">No. We handle the technical part and explain everything in plain language.</p></details>
+                    <details><summary><span data-i18n="q4">What happens with my data?</span><span class="faq-icon" aria-hidden="true"></span></summary><p data-i18n="a4">Your data is used only for your project. We choose GDPR-compliant solutions that, where needed, can run on your own infrastructure.</p></details>
+                    <details><summary><span data-i18n="q5">Can you integrate with the tools we already use?</span><span class="faq-icon" aria-hidden="true"></span></summary><p data-i18n="a5">In most cases, yes — email, CRM, spreadsheets, online stores or internal databases.</p></details>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section" id="contact" style="padding-top:0">
+            <div class="container">
+                <div class="contact-card reveal">
+                    <div class="eyebrow" data-i18n="contact-eyebrow">Contact</div>
+                    <h2 class="h2" data-i18n="contact-h">Let's talk about your project</h2>
+                    <p class="lead" data-i18n="contact-p">Write to us directly or use the form above.</p>
+                    <a href="mailto:office@stecstudio.ai" class="btn btn-primary">
+                        <span data-i18n="contact-btn">Send an email</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="mailto:office@stecstudio.ai" class="contact-email">office@stecstudio.ai</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <a href="#top" class="brand" aria-label="StecStudio">
+                <svg viewBox="0 0 103 134" aria-hidden="true"><use href="#stec-mark"/></svg>
+                <span class="wordmark" aria-hidden="true"><b>STEC</b><span>STUDIO</span></span>
+            </a>
+            <div class="footer-meta">
+                <span>&copy; <span id="year">2026</span> StecStudio.ai · <span data-i18n="footer-rights">All rights reserved.</span></span>
+                <button type="button" class="link-btn" data-open-privacy data-i18n="footer-privacy">Privacy</button>
+                <a href="mailto:office@stecstudio.ai">office@stecstudio.ai</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy policy -->
+    <dialog id="privacy" aria-labelledby="privacy-title">
+        <div class="dialog-inner">
+            <h2 id="privacy-title" data-i18n="privacy-h">Privacy policy</h2>
+            <p class="pre" data-i18n="privacy-body"></p>
+            <form method="dialog"><button class="btn btn-primary" data-i18n="privacy-close">Close</button></form>
+        </div>
+    </dialog>
+
+    <!-- Formspree (free plan) -->
+    <script>
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+        formspree('initForm', {
+            formElement: '#idea-lab-form',
+            formId: 'xyekwklg',
+            onSuccess: function () { document.getElementById('idea-lab-form').style.display = 'none'; }
+        });
+    </script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+    <!-- Translations -->
+    <script>
+        const I18N = {
+            en: {
+                "meta-title": "StecStudio | AI Agents & Digital Solutions",
+                "meta-desc": "StecStudio builds custom AI agents, web platforms and automations for businesses.",
+                "skip": "Skip to content", "menu": "Open menu", "lang": "Language",
+                "nav-services": "Services", "nav-process": "Process", "nav-idealab": "Idea Lab", "nav-faq": "FAQ", "nav-contact": "Contact",
+                "hero-badge": "AI Agents · Web · Automation",
+                "hero-title": "Elevating Businesses", "hero-subtitle": "Through AI Agents",
+                "hero-description": "We design AI agents, web platforms and automations that take repetitive work off your team — built around your data and your processes.",
+                "btn-start": "Submit your idea", "btn-view": "Our solutions",
+                "services-eyebrow": "What we build", "services-h": "Practical AI, built for your business",
+                "services-p": "Every solution is designed around a real problem — not around a trend.",
+                "s1-h": "AI Ecosystems", "s1-p": "Custom LLM solutions that turn your internal documents and data into answers your team can use.",
+                "s1-l1": "Internal assistant trained on your documents", "s1-l2": "Smart search across files, emails and databases", "s1-l3": "Automatic reports and summaries",
+                "s2-h": "Digital Interfaces", "s2-p": "Fast, modern websites and web apps with AI built into the experience.",
+                "s2-l1": "Presentation websites and landing pages", "s2-l2": "Client portals and dashboards", "s2-l3": "AI chat for customer support, 24/7",
+                "s3-h": "Autonomous Agents", "s3-p": "Agents that execute complete workflows — from receiving a request to finishing the task.",
+                "s3-l1": "Email processing and lead qualification", "s3-l2": "Automatic data entry from invoices and documents", "s3-l3": "Integrations between the tools you already use",
+                "process-eyebrow": "How we work", "process-h": "From idea to working product",
+                "p1-h": "Discovery", "p1-p": "We talk about your goals, your processes and where time is lost.",
+                "p2-h": "Prototype", "p2-p": "We build a first working version so you can test the idea quickly.",
+                "p3-h": "Build", "p3-p": "We develop, integrate and test the complete solution with your team.",
+                "p4-h": "Support", "p4-p": "We monitor, improve and adapt the solution as your business grows.",
+                "idealab-eyebrow": "Idea Lab", "idealab-h": "You have the vision.\nWe have the code.",
+                "idealab-p": "Describe the challenge you're facing or the AI solution you're dreaming of. We'll get back to you with next steps.",
+                "label-name": "Name", "label-email": "Email", "label-company": "Company (optional)", "label-idea": "Your idea or problem",
+                "ph-name": "Your name", "ph-email": "you@company.com", "ph-company": "Company name",
+                "ph-idea": "E.g. we spend hours every week answering the same customer emails...",
+                "consent": "I agree that StecStudio may process my data to answer this request.", "privacy-link": "Privacy policy",
+                "btn-submit": "Send my idea",
+                "success-msg": "Thanks! Your idea has been submitted. We'll contact you shortly.",
+                "error-msg": "Oops! There was a problem submitting your form. Please try again or write to us by email.",
+                "faq-eyebrow": "FAQ", "faq-h": "Frequently asked questions",
+                "q1": "How much does a project cost?", "a1": "It depends on scope. Once we understand your needs, we send you a clear estimate before any work begins.",
+                "q2": "How long does it take?", "a2": "Timelines depend on complexity. We start with a small prototype, so you see results early.",
+                "q3": "Do I need technical knowledge?", "a3": "No. We handle the technical part and explain everything in plain language.",
+                "q4": "What happens with my data?", "a4": "Your data is used only for your project. We choose GDPR-compliant solutions that, where needed, can run on your own infrastructure.",
+                "q5": "Can you integrate with the tools we already use?", "a5": "In most cases, yes — email, CRM, spreadsheets, online stores or internal databases.",
+                "contact-eyebrow": "Contact", "contact-h": "Let's talk about your project", "contact-p": "Write to us directly or use the form above.", "contact-btn": "Send an email",
+                "footer-rights": "All rights reserved.", "footer-privacy": "Privacy",
+                "privacy-h": "Privacy policy",
+                "privacy-body": "When you submit the Idea Lab form, we collect your name, email address, company (optional) and your message. We use this data only to reply to your request and to discuss a possible collaboration.\n\nThe form is processed through Formspree, which forwards the message to us by email. We do not sell your data and do not use it for advertising.\n\nYou can ask at any time to access, correct or delete your data by writing to office@stecstudio.ai.",
+                "privacy-close": "Close"
+            },
+            ro: {
+                "meta-title": "StecStudio | Agenți AI și soluții digitale",
+                "meta-desc": "StecStudio creează agenți AI, platforme web și automatizări personalizate pentru afaceri.",
+                "skip": "Sari la conținut", "menu": "Deschide meniul", "lang": "Limbă",
+                "nav-services": "Servicii", "nav-process": "Proces", "nav-idealab": "Idea Lab", "nav-faq": "Întrebări", "nav-contact": "Contact",
+                "hero-badge": "Agenți AI · Web · Automatizare",
+                "hero-title": "Evoluție Digitală", "hero-subtitle": "Prin Agenți AI",
+                "hero-description": "Creăm agenți AI, platforme web și automatizări care preiau munca repetitivă de pe umerii echipei tale — construite pe datele și procesele tale.",
+                "btn-start": "Trimite ideea ta", "btn-view": "Soluțiile noastre",
+                "services-eyebrow": "Ce construim", "services-h": "AI practic, construit pentru afacerea ta",
+                "services-p": "Fiecare soluție pornește de la o problemă reală — nu de la un trend.",
+                "s1-h": "Ecosisteme AI", "s1-p": "Soluții LLM personalizate care transformă documentele și datele interne în răspunsuri utile pentru echipa ta.",
+                "s1-l1": "Asistent intern antrenat pe documentele tale", "s1-l2": "Căutare inteligentă în fișiere, emailuri și baze de date", "s1-l3": "Rapoarte și rezumate generate automat",
+                "s2-h": "Interfețe Digitale", "s2-p": "Site-uri și aplicații web rapide și moderne, cu AI integrat în experiență.",
+                "s2-l1": "Site-uri de prezentare și landing page-uri", "s2-l2": "Portaluri pentru clienți și dashboard-uri", "s2-l3": "Chat AI pentru suport clienți, 24/7",
+                "s3-h": "Agenți Autonomi", "s3-p": "Agenți care execută fluxuri complete — de la primirea unei cereri până la finalizarea sarcinii.",
+                "s3-l1": "Procesarea emailurilor și calificarea lead-urilor", "s3-l2": "Introducere automată de date din facturi și documente", "s3-l3": "Integrări între instrumentele pe care le folosești deja",
+                "process-eyebrow": "Cum lucrăm", "process-h": "De la idee la produs funcțional",
+                "p1-h": "Analiză", "p1-p": "Discutăm despre obiectivele tale, procesele existente și unde se pierde timp.",
+                "p2-h": "Prototip", "p2-p": "Construim o primă versiune funcțională, ca să poți testa ideea rapid.",
+                "p3-h": "Dezvoltare", "p3-p": "Dezvoltăm, integrăm și testăm soluția completă împreună cu echipa ta.",
+                "p4-h": "Suport", "p4-p": "Monitorizăm, îmbunătățim și adaptăm soluția pe măsură ce afacerea ta crește.",
+                "idealab-eyebrow": "Idea Lab", "idealab-h": "Tu vii cu viziunea.\nNoi venim cu codul.",
+                "idealab-p": "Descrie provocarea pe care o întâmpini sau soluția AI la care visezi. Revenim cu pașii următori.",
+                "label-name": "Nume", "label-email": "Email", "label-company": "Companie (opțional)", "label-idea": "Ideea sau problema ta",
+                "ph-name": "Numele tău", "ph-email": "tu@companie.ro", "ph-company": "Numele companiei",
+                "ph-idea": "Ex.: petrecem ore în fiecare săptămână răspunzând la aceleași emailuri de la clienți...",
+                "consent": "Sunt de acord ca StecStudio să îmi prelucreze datele pentru a răspunde acestei solicitări.", "privacy-link": "Politica de confidențialitate",
+                "btn-submit": "Trimite ideea",
+                "success-msg": "Mulțumim! Ideea ta a fost trimisă. Te vom contacta în curând.",
+                "error-msg": "Hopa! A apărut o problemă la trimiterea formularului. Încearcă din nou sau scrie-ne pe email.",
+                "faq-eyebrow": "FAQ", "faq-h": "Întrebări frecvente",
+                "q1": "Cât costă un proiect?", "a1": "Depinde de complexitate. După ce înțelegem de ce ai nevoie, îți trimitem o estimare clară înainte de a începe lucrul.",
+                "q2": "Cât durează?", "a2": "Durata depinde de complexitate. Începem cu un prototip mic, ca să vezi rezultate din timp.",
+                "q3": "Am nevoie de cunoștințe tehnice?", "a3": "Nu. Ne ocupăm noi de partea tehnică și îți explicăm totul pe înțelesul tău.",
+                "q4": "Ce se întâmplă cu datele mele?", "a4": "Datele tale sunt folosite doar pentru proiectul tău. Alegem soluții care respectă GDPR și care, unde e nevoie, pot rula pe infrastructura ta.",
+                "q5": "Vă puteți integra cu instrumentele pe care le folosim deja?", "a5": "În cele mai multe cazuri, da — email, CRM, tabele, magazine online sau baze de date interne.",
+                "contact-eyebrow": "Contact", "contact-h": "Hai să discutăm despre proiectul tău", "contact-p": "Scrie-ne direct sau folosește formularul de mai sus.", "contact-btn": "Trimite un email",
+                "footer-rights": "Toate drepturile rezervate.", "footer-privacy": "Confidențialitate",
+                "privacy-h": "Politica de confidențialitate",
+                "privacy-body": "Când trimiți formularul Idea Lab, colectăm numele, adresa de email, compania (opțional) și mesajul tău. Folosim aceste date doar pentru a răspunde solicitării tale și pentru a discuta o posibilă colaborare.\n\nFormularul este procesat prin Formspree, care ne transmite mesajul pe email. Nu vindem datele tale și nu le folosim în scopuri publicitare.\n\nPoți cere oricând accesul la date, corectarea sau ștergerea lor scriind la office@stecstudio.ai.",
+                "privacy-close": "Închide"
+            },
+            fr: {
+                "meta-title": "StecStudio | Agents IA et solutions digitales",
+                "meta-desc": "StecStudio crée des agents IA, des plateformes web et des automatisations sur mesure pour les entreprises.",
+                "skip": "Aller au contenu", "menu": "Ouvrir le menu", "lang": "Langue",
+                "nav-services": "Services", "nav-process": "Méthode", "nav-idealab": "Labo d'idées", "nav-faq": "FAQ", "nav-contact": "Contact",
+                "hero-badge": "Agents IA · Web · Automatisation",
+                "hero-title": "Élever les Entreprises", "hero-subtitle": "Grâce aux Agents IA",
+                "hero-description": "Nous concevons des agents IA, des plateformes web et des automatisations qui libèrent votre équipe des tâches répétitives — construits autour de vos données et de vos processus.",
+                "btn-start": "Soumettre votre idée", "btn-view": "Nos solutions",
+                "services-eyebrow": "Ce que nous créons", "services-h": "Une IA concrète, pensée pour votre entreprise",
+                "services-p": "Chaque solution part d'un problème réel — pas d'une tendance.",
+                "s1-h": "Écosystèmes IA", "s1-p": "Des solutions LLM sur mesure qui transforment vos documents et données internes en réponses utiles pour votre équipe.",
+                "s1-l1": "Assistant interne entraîné sur vos documents", "s1-l2": "Recherche intelligente dans vos fichiers, e-mails et bases de données", "s1-l3": "Rapports et synthèses générés automatiquement",
+                "s2-h": "Interfaces Digitales", "s2-p": "Des sites et applications web rapides et modernes, avec l'IA intégrée à l'expérience.",
+                "s2-l1": "Sites vitrines et landing pages", "s2-l2": "Portails clients et tableaux de bord", "s2-l3": "Chat IA pour le support client, 24h/24",
+                "s3-h": "Agents Autonomes", "s3-p": "Des agents qui exécutent des processus complets — de la réception d'une demande jusqu'à la tâche terminée.",
+                "s3-l1": "Traitement des e-mails et qualification des prospects", "s3-l2": "Saisie automatique de données depuis factures et documents", "s3-l3": "Intégrations entre les outils que vous utilisez déjà",
+                "process-eyebrow": "Notre méthode", "process-h": "De l'idée au produit fonctionnel",
+                "p1-h": "Découverte", "p1-p": "Nous parlons de vos objectifs, de vos processus et des endroits où le temps se perd.",
+                "p2-h": "Prototype", "p2-p": "Nous construisons une première version fonctionnelle pour tester l'idée rapidement.",
+                "p3-h": "Développement", "p3-p": "Nous développons, intégrons et testons la solution complète avec votre équipe.",
+                "p4-h": "Suivi", "p4-p": "Nous surveillons, améliorons et adaptons la solution au rythme de votre croissance.",
+                "idealab-eyebrow": "Labo d'idées", "idealab-h": "Vous avez la vision.\nNous avons le code.",
+                "idealab-p": "Décrivez le défi auquel vous faites face ou la solution IA dont vous rêvez. Nous reviendrons vers vous avec les prochaines étapes.",
+                "label-name": "Nom", "label-email": "E-mail", "label-company": "Entreprise (facultatif)", "label-idea": "Votre idée ou problème",
+                "ph-name": "Votre nom", "ph-email": "vous@entreprise.fr", "ph-company": "Nom de l'entreprise",
+                "ph-idea": "Ex. : nous passons des heures chaque semaine à répondre aux mêmes e-mails clients...",
+                "consent": "J'accepte que StecStudio traite mes données pour répondre à cette demande.", "privacy-link": "Politique de confidentialité",
+                "btn-submit": "Envoyer mon idée",
+                "success-msg": "Merci ! Votre idée a bien été envoyée. Nous vous contacterons bientôt.",
+                "error-msg": "Oups ! Un problème est survenu lors de l'envoi. Réessayez ou écrivez-nous par e-mail.",
+                "faq-eyebrow": "FAQ", "faq-h": "Questions fréquentes",
+                "q1": "Combien coûte un projet ?", "a1": "Cela dépend de la complexité. Une fois vos besoins compris, nous vous envoyons une estimation claire avant de commencer.",
+                "q2": "Combien de temps cela prend-il ?", "a2": "La durée dépend de la complexité. Nous commençons par un petit prototype pour que vous voyiez des résultats rapidement.",
+                "q3": "Faut-il des connaissances techniques ?", "a3": "Non. Nous gérons la partie technique et vous expliquons tout simplement.",
+                "q4": "Que deviennent mes données ?", "a4": "Vos données servent uniquement à votre projet. Nous choisissons des solutions conformes au RGPD qui, si nécessaire, peuvent fonctionner sur votre propre infrastructure.",
+                "q5": "Pouvez-vous vous connecter à nos outils actuels ?", "a5": "Dans la plupart des cas, oui — e-mail, CRM, tableurs, boutiques en ligne ou bases de données internes.",
+                "contact-eyebrow": "Contact", "contact-h": "Parlons de votre projet", "contact-p": "Écrivez-nous directement ou utilisez le formulaire ci-dessus.", "contact-btn": "Envoyer un e-mail",
+                "footer-rights": "Tous droits réservés.", "footer-privacy": "Confidentialité",
+                "privacy-h": "Politique de confidentialité",
+                "privacy-body": "Lorsque vous envoyez le formulaire du Labo d'idées, nous collectons votre nom, votre adresse e-mail, votre entreprise (facultatif) et votre message. Nous utilisons ces données uniquement pour répondre à votre demande et discuter d'une éventuelle collaboration.\n\nLe formulaire est traité par Formspree, qui nous transmet le message par e-mail. Nous ne vendons pas vos données et ne les utilisons pas à des fins publicitaires.\n\nVous pouvez à tout moment demander l'accès, la rectification ou la suppression de vos données en écrivant à office@stecstudio.ai.",
+                "privacy-close": "Fermer"
+            },
+            de: {
+                "meta-title": "StecStudio | KI-Agenten und digitale Lösungen",
+                "meta-desc": "StecStudio entwickelt individuelle KI-Agenten, Webplattformen und Automatisierungen für Unternehmen.",
+                "skip": "Zum Inhalt springen", "menu": "Menü öffnen", "lang": "Sprache",
+                "nav-services": "Leistungen", "nav-process": "Ablauf", "nav-idealab": "Ideen-Labor", "nav-faq": "FAQ", "nav-contact": "Kontakt",
+                "hero-badge": "KI-Agenten · Web · Automatisierung",
+                "hero-title": "Unternehmen voranbringen", "hero-subtitle": "Mit KI-Agenten",
+                "hero-description": "Wir entwickeln KI-Agenten, Webplattformen und Automatisierungen, die Ihrem Team wiederkehrende Arbeit abnehmen — zugeschnitten auf Ihre Daten und Prozesse.",
+                "btn-start": "Idee einreichen", "btn-view": "Unsere Lösungen",
+                "services-eyebrow": "Was wir bauen", "services-h": "Praktische KI für Ihr Unternehmen",
+                "services-p": "Jede Lösung beginnt bei einem echten Problem — nicht bei einem Trend.",
+                "s1-h": "KI-Ökosysteme", "s1-p": "Individuelle LLM-Lösungen, die Ihre internen Dokumente und Daten in nutzbare Antworten für Ihr Team verwandeln.",
+                "s1-l1": "Interner Assistent auf Basis Ihrer Dokumente", "s1-l2": "Intelligente Suche in Dateien, E-Mails und Datenbanken", "s1-l3": "Automatisch erstellte Berichte und Zusammenfassungen",
+                "s2-h": "Digitale Schnittstellen", "s2-p": "Schnelle, moderne Websites und Web-Apps mit integrierter KI.",
+                "s2-l1": "Unternehmenswebsites und Landingpages", "s2-l2": "Kundenportale und Dashboards", "s2-l3": "KI-Chat für den Kundensupport, rund um die Uhr",
+                "s3-h": "Autonome Agenten", "s3-p": "Agenten, die komplette Abläufe ausführen — von der eingehenden Anfrage bis zur erledigten Aufgabe.",
+                "s3-l1": "E-Mail-Verarbeitung und Lead-Qualifizierung", "s3-l2": "Automatische Datenerfassung aus Rechnungen und Dokumenten", "s3-l3": "Integrationen zwischen Ihren bestehenden Tools",
+                "process-eyebrow": "Unser Ablauf", "process-h": "Von der Idee zum funktionierenden Produkt",
+                "p1-h": "Analyse", "p1-p": "Wir sprechen über Ihre Ziele, Ihre Prozesse und darüber, wo Zeit verloren geht.",
+                "p2-h": "Prototyp", "p2-p": "Wir bauen eine erste funktionierende Version, damit Sie die Idee schnell testen können.",
+                "p3-h": "Umsetzung", "p3-p": "Wir entwickeln, integrieren und testen die komplette Lösung gemeinsam mit Ihrem Team.",
+                "p4-h": "Betreuung", "p4-p": "Wir überwachen, verbessern und passen die Lösung an, während Ihr Unternehmen wächst.",
+                "idealab-eyebrow": "Ideen-Labor", "idealab-h": "Sie haben die Vision.\nWir haben den Code.",
+                "idealab-p": "Beschreiben Sie Ihre Herausforderung oder die KI-Lösung, von der Sie träumen. Wir melden uns mit den nächsten Schritten.",
+                "label-name": "Name", "label-email": "E-Mail", "label-company": "Unternehmen (optional)", "label-idea": "Ihre Idee oder Ihr Problem",
+                "ph-name": "Ihr Name", "ph-email": "sie@unternehmen.de", "ph-company": "Name des Unternehmens",
+                "ph-idea": "Z. B.: Wir verbringen jede Woche Stunden damit, dieselben Kunden-E-Mails zu beantworten...",
+                "consent": "Ich bin einverstanden, dass StecStudio meine Daten zur Bearbeitung dieser Anfrage verarbeitet.", "privacy-link": "Datenschutzerklärung",
+                "btn-submit": "Idee senden",
+                "success-msg": "Danke! Ihre Idee wurde gesendet. Wir melden uns in Kürze.",
+                "error-msg": "Hoppla! Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie uns eine E-Mail.",
+                "faq-eyebrow": "FAQ", "faq-h": "Häufige Fragen",
+                "q1": "Was kostet ein Projekt?", "a1": "Das hängt vom Umfang ab. Sobald wir Ihren Bedarf verstehen, erhalten Sie eine klare Schätzung, bevor die Arbeit beginnt.",
+                "q2": "Wie lange dauert es?", "a2": "Die Dauer hängt von der Komplexität ab. Wir starten mit einem kleinen Prototyp, damit Sie früh Ergebnisse sehen.",
+                "q3": "Brauche ich technisches Wissen?", "a3": "Nein. Wir kümmern uns um die Technik und erklären alles verständlich.",
+                "q4": "Was passiert mit meinen Daten?", "a4": "Ihre Daten werden ausschließlich für Ihr Projekt verwendet. Wir wählen DSGVO-konforme Lösungen, die bei Bedarf auch auf Ihrer eigenen Infrastruktur laufen.",
+                "q5": "Können Sie unsere bestehenden Tools anbinden?", "a5": "In den meisten Fällen ja — E-Mail, CRM, Tabellen, Onlineshops oder interne Datenbanken.",
+                "contact-eyebrow": "Kontakt", "contact-h": "Lassen Sie uns über Ihr Projekt sprechen", "contact-p": "Schreiben Sie uns direkt oder nutzen Sie das Formular oben.", "contact-btn": "E-Mail senden",
+                "footer-rights": "Alle Rechte vorbehalten.", "footer-privacy": "Datenschutz",
+                "privacy-h": "Datenschutzerklärung",
+                "privacy-body": "Wenn Sie das Formular im Ideen-Labor absenden, erfassen wir Ihren Namen, Ihre E-Mail-Adresse, Ihr Unternehmen (optional) und Ihre Nachricht. Wir verwenden diese Daten ausschließlich, um Ihre Anfrage zu beantworten und eine mögliche Zusammenarbeit zu besprechen.\n\nDas Formular wird über Formspree verarbeitet, das uns die Nachricht per E-Mail weiterleitet. Wir verkaufen Ihre Daten nicht und nutzen sie nicht zu Werbezwecken.\n\nSie können jederzeit Auskunft, Berichtigung oder Löschung Ihrer Daten verlangen, indem Sie an office@stecstudio.ai schreiben.",
+                "privacy-close": "Schließen"
+            },
+            it: {
+                "meta-title": "StecStudio | Agenti IA e soluzioni digitali",
+                "meta-desc": "StecStudio crea agenti IA, piattaforme web e automazioni su misura per le aziende.",
+                "skip": "Vai al contenuto", "menu": "Apri il menu", "lang": "Lingua",
+                "nav-services": "Servizi", "nav-process": "Metodo", "nav-idealab": "Lab di Idee", "nav-faq": "FAQ", "nav-contact": "Contatti",
+                "hero-badge": "Agenti IA · Web · Automazione",
+                "hero-title": "Elevare le Imprese", "hero-subtitle": "Con gli Agenti IA",
+                "hero-description": "Progettiamo agenti IA, piattaforme web e automazioni che liberano il tuo team dal lavoro ripetitivo — costruiti sui tuoi dati e sui tuoi processi.",
+                "btn-start": "Invia la tua idea", "btn-view": "Le nostre soluzioni",
+                "services-eyebrow": "Cosa costruiamo", "services-h": "IA concreta, pensata per la tua azienda",
+                "services-p": "Ogni soluzione nasce da un problema reale — non da una moda.",
+                "s1-h": "Ecosistemi IA", "s1-p": "Soluzioni LLM su misura che trasformano documenti e dati interni in risposte utili per il tuo team.",
+                "s1-l1": "Assistente interno addestrato sui tuoi documenti", "s1-l2": "Ricerca intelligente tra file, email e database", "s1-l3": "Report e riepiloghi generati automaticamente",
+                "s2-h": "Interfacce Digitali", "s2-p": "Siti e applicazioni web veloci e moderni, con l'IA integrata nell'esperienza.",
+                "s2-l1": "Siti vetrina e landing page", "s2-l2": "Portali clienti e dashboard", "s2-l3": "Chat IA per l'assistenza clienti, 24/7",
+                "s3-h": "Agenti Autonomi", "s3-p": "Agenti che eseguono flussi completi — dalla ricezione di una richiesta al completamento dell'attività.",
+                "s3-l1": "Gestione delle email e qualificazione dei lead", "s3-l2": "Inserimento automatico di dati da fatture e documenti", "s3-l3": "Integrazioni tra gli strumenti che già usi",
+                "process-eyebrow": "Il nostro metodo", "process-h": "Dall'idea al prodotto funzionante",
+                "p1-h": "Analisi", "p1-p": "Parliamo dei tuoi obiettivi, dei tuoi processi e di dove si perde tempo.",
+                "p2-h": "Prototipo", "p2-p": "Costruiamo una prima versione funzionante per testare l'idea rapidamente.",
+                "p3-h": "Sviluppo", "p3-p": "Sviluppiamo, integriamo e testiamo la soluzione completa insieme al tuo team.",
+                "p4-h": "Supporto", "p4-p": "Monitoriamo, miglioriamo e adattiamo la soluzione man mano che la tua azienda cresce.",
+                "idealab-eyebrow": "Lab di Idee", "idealab-h": "Tu hai la visione.\nNoi abbiamo il codice.",
+                "idealab-p": "Descrivi la sfida che stai affrontando o la soluzione IA che sogni. Ti ricontatteremo con i prossimi passi.",
+                "label-name": "Nome", "label-email": "Email", "label-company": "Azienda (facoltativo)", "label-idea": "La tua idea o il tuo problema",
+                "ph-name": "Il tuo nome", "ph-email": "tu@azienda.it", "ph-company": "Nome dell'azienda",
+                "ph-idea": "Es.: ogni settimana passiamo ore a rispondere alle stesse email dei clienti...",
+                "consent": "Acconsento al trattamento dei miei dati da parte di StecStudio per rispondere a questa richiesta.", "privacy-link": "Informativa sulla privacy",
+                "btn-submit": "Invia la mia idea",
+                "success-msg": "Grazie! La tua idea è stata inviata. Ti contatteremo a breve.",
+                "error-msg": "Ops! Si è verificato un problema nell'invio. Riprova o scrivici via email.",
+                "faq-eyebrow": "FAQ", "faq-h": "Domande frequenti",
+                "q1": "Quanto costa un progetto?", "a1": "Dipende dalla complessità. Dopo aver capito le tue esigenze, ti inviamo una stima chiara prima di iniziare.",
+                "q2": "Quanto tempo serve?", "a2": "Dipende dalla complessità. Partiamo da un piccolo prototipo, così vedi i risultati fin da subito.",
+                "q3": "Servono competenze tecniche?", "a3": "No. Ci occupiamo noi della parte tecnica e ti spieghiamo tutto in modo semplice.",
+                "q4": "Cosa succede ai miei dati?", "a4": "I tuoi dati vengono usati solo per il tuo progetto. Scegliamo soluzioni conformi al GDPR che, se necessario, possono funzionare sulla tua infrastruttura.",
+                "q5": "Potete integrarvi con gli strumenti che già usiamo?", "a5": "Nella maggior parte dei casi sì — email, CRM, fogli di calcolo, negozi online o database interni.",
+                "contact-eyebrow": "Contatti", "contact-h": "Parliamo del tuo progetto", "contact-p": "Scrivici direttamente o usa il modulo qui sopra.", "contact-btn": "Invia un'email",
+                "footer-rights": "Tutti i diritti riservati.", "footer-privacy": "Privacy",
+                "privacy-h": "Informativa sulla privacy",
+                "privacy-body": "Quando invii il modulo del Lab di Idee, raccogliamo il tuo nome, l'indirizzo email, l'azienda (facoltativa) e il tuo messaggio. Usiamo questi dati solo per rispondere alla tua richiesta e per discutere una possibile collaborazione.\n\nIl modulo è gestito tramite Formspree, che ci inoltra il messaggio via email. Non vendiamo i tuoi dati e non li usiamo per scopi pubblicitari.\n\nPuoi chiedere in qualsiasi momento l'accesso, la rettifica o la cancellazione dei tuoi dati scrivendo a office@stecstudio.ai.",
+                "privacy-close": "Chiudi"
+            }
+        };
+
+        (() => {
+            const LANGS = Object.keys(I18N);
+            const select = document.getElementById('lang-select');
+            const store = {
+                get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+                set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
+            };
+
+            function applyLanguage(lang) {
+                const t = I18N[lang] || I18N.en;
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const v = t[el.dataset.i18n];
+                    if (v != null) el.textContent = v;
+                });
+                document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                    const v = t[el.dataset.i18nPh];
+                    if (v != null) el.placeholder = v;
+                });
+                document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+                    const v = t[el.dataset.i18nAria];
+                    if (v != null) el.setAttribute('aria-label', v);
+                });
+                document.documentElement.lang = lang;
+                document.title = t['meta-title'];
+                document.querySelector('meta[name="description"]').setAttribute('content', t['meta-desc']);
+                select.value = lang;
+            }
+
+            function detectLanguage() {
+                const saved = store.get('preferredLang');
+                if (saved && LANGS.includes(saved)) return saved;
+                const browser = (navigator.languages || [navigator.language || 'en'])
+                    .map(l => l.slice(0, 2).toLowerCase())
+                    .find(l => LANGS.includes(l));
+                return browser || 'en';
+            }
+
+            select.addEventListener('change', () => {
+                applyLanguage(select.value);
+                store.set('preferredLang', select.value);
+                select.blur();
+            });
+            applyLanguage(detectLanguage());
+        })();
+    </script>
+
+    <!-- UI: menu, nav state, reveal, privacy dialog -->
+    <script>
+        (() => {
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // Mobile menu
+            const nav = document.getElementById('nav');
+            const toggle = nav.querySelector('.menu-toggle');
+            const menu = document.getElementById('site-menu');
+            const setMenu = open => {
+                toggle.setAttribute('aria-expanded', String(open));
+                menu.classList.toggle('is-open', open);
+            };
+            toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+            menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+            document.addEventListener('click', e => { if (!nav.contains(e.target)) setMenu(false); });
+
+            // Nav border on scroll
+            const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 10);
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            // Active link for the section in view
+            const links = Array.from(menu.querySelectorAll('a'));
+            if ('IntersectionObserver' in window) {
+                const spy = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+                        links.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === '#' + entry.target.id));
+                    });
+                }, { rootMargin: '-45% 0px -50% 0px' });
+                links.forEach(l => { const s = document.querySelector(l.getAttribute('href')); if (s) spy.observe(s); });
+            }
+
+            // Reveal on scroll
+            const items = Array.from(document.querySelectorAll('.reveal'));
+            if (!('IntersectionObserver' in window)) {
+                items.forEach(el => el.classList.add('is-visible'));
+            } else {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    });
+                }, { threshold: 0.12 });
+                items.forEach(el => {
+                    const siblings = Array.from(el.parentElement.children).filter(c => c.classList.contains('reveal'));
+                    el.style.setProperty('--delay', `${siblings.indexOf(el) * 90}ms`);
+                    observer.observe(el);
+                });
+            }
+
+            // Privacy dialog
+            const dialog = document.getElementById('privacy');
+            document.querySelectorAll('[data-open-privacy]').forEach(btn => btn.addEventListener('click', () => {
+                if (typeof dialog.showModal === 'function') dialog.showModal();
+                else dialog.setAttribute('open', '');
+            }));
+            dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+        })();
+    </script>
+</body>
+</html>
