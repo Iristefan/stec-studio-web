@@ -31,6 +31,43 @@
         
         [data-fs-success] { display: none; background: rgba(9, 205, 210, 0.1); border: 1px solid var(--brand-cyan); padding: 1.5rem; border-radius: 1.5rem; color: var(--brand-cyan); margin-bottom: 2rem; font-weight: bold; }
         [data-fs-error] { display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 1.5rem; border-radius: 1.5rem; color: #ef4444; margin-bottom: 2rem; }
+        /* STEC Studio: subtle motion, enabled only when motion is welcome. */
+        html { scroll-behavior: smooth; scroll-padding-top: 7rem; }
+        .hero-glow { pointer-events: none; }
+        .service-card { transition: transform .3s ease; }
+        .service-card .hex-icon { transition: transform .3s ease, filter .3s ease; }
+        a:focus-visible, button:focus-visible, select:focus-visible {
+            outline: 2px solid var(--brand-cyan); outline-offset: 5px;
+        }
+        @media (prefers-reduced-motion: no-preference) {
+            .hero-enter { animation: stec-enter .7s cubic-bezier(.2,.7,.2,1) both; }
+            .hero-delay-1 { animation-delay: .1s; }
+            .hero-delay-2 { animation-delay: .22s; }
+            .hero-delay-3 { animation-delay: .34s; }
+            .hero-glow { animation: stec-glow 14s ease-in-out infinite; }
+            .reveal-ready { opacity: 0; transform: translateY(22px); }
+            .reveal-ready.is-visible {
+                animation: stec-enter .65s cubic-bezier(.2,.7,.2,1) both;
+                animation-delay: var(--reveal-delay, 0ms);
+            }
+        }
+        @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+            .service-card:hover { transform: translateY(-6px); }
+            .service-card:hover .hex-icon { filter: drop-shadow(0 0 10px rgba(9,205,210,.25)); }
+        }
+        @keyframes stec-enter {
+            from { opacity: 0; transform: translateY(22px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes stec-glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: .7; }
+            50% { transform: translate(-46%, -54%) scale(1.08); opacity: 1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html, body { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .reveal-ready { opacity: 1; transform: none; }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -48,7 +85,7 @@
                     <a href="#contact" data-key="nav-contact" class="hover:text-[#09cdd2] transition">Contact</a>
                 </div>
                 <!-- Dropdown cu Româna pe ultima poziție -->
-                <select onchange="changeLanguage(this.value)" class="bg-[#111] border border-gray-800 text-[10px] rounded-full px-4 py-2 outline-none cursor-pointer hover:border-[#09cdd2] transition uppercase tracking-widest">
+                <select onchange="changeLanguage(this.value); this.blur();" class="bg-[#111] border border-gray-800 text-[10px] rounded-full px-4 py-2 outline-none cursor-pointer hover:border-[#09cdd2] transition uppercase tracking-widest">
                     <option value="en">English</option>
                     <option value="fr">Français</option>
                     <option value="de">Deutsch</option>
@@ -62,42 +99,42 @@
     <!-- Hero -->
     <section class="pt-52 pb-32 px-6 text-center relative overflow-hidden">
         <div class="max-w-4xl mx-auto relative z-10">
-            <div class="inline-block px-5 py-2 mb-8 border border-[#09cdd2]/30 rounded-full bg-[#09cdd2]/5 text-[#09cdd2] text-[11px] uppercase tracking-[0.4em] font-black">
+            <div class="hero-enter inline-block px-5 py-2 mb-8 border border-[#09cdd2]/30 rounded-full bg-[#09cdd2]/5 text-[#09cdd2] text-[11px] uppercase tracking-[0.4em] font-black">
                 Intelligence Architected
             </div>
-            <h1 class="text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tighter">
+            <h1 class="hero-enter hero-delay-1 text-6xl md:text-8xl font-black mb-8 leading-tight tracking-tighter">
                 <span data-key="hero-title">Elevating Businesses</span><br>
                 <span class="text-gradient" data-key="hero-subtitle">Through AI Agents</span>
             </h1>
-            <p class="text-gray-500 text-lg md:text-xl max-w-2xl mx-auto mb-14 font-light leading-relaxed" data-key="hero-description">
+            <p class="hero-enter hero-delay-2 text-gray-500 text-lg md:text-xl max-w-2xl mx-auto mb-14 font-light leading-relaxed" data-key="hero-description">
                 Tailor-made neural architectures and autonomous agents designed to redefine your operational scale.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-8">
+            <div class="hero-enter hero-delay-3 flex flex-col sm:flex-row justify-center gap-8">
                 <a href="#idea-lab" class="btn-premium px-12 py-5 rounded-full font-black uppercase text-xs tracking-widest" data-key="btn-start">Submit Your Idea</a>
                 <a href="#services" class="px-12 py-5 rounded-full border border-gray-700 font-bold uppercase text-xs tracking-widest hover:bg-white hover:text-black transition" data-key="btn-view">Our Solutions</a>
             </div>
         </div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#09cdd2]/10 rounded-full blur-[120px] -z-0"></div>
+        <div class="hero-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#09cdd2]/10 rounded-full blur-[120px] -z-0"></div>
     </section>
 
     <!-- Services Section -->
     <section id="services" class="max-w-7xl mx-auto px-6 py-24 border-t border-gray-900/50">
         <div class="grid md:grid-cols-3 gap-16">
-            <div class="group">
+            <div class="group service-card">
                 <div class="hex-icon w-20 h-20 mb-8 transition-transform group-hover:scale-110">
                     <svg class="w-8 h-8 text-[#09cdd2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                 </div>
                 <h3 class="text-2xl font-bold mb-4 tracking-tight" data-key="service1-h">AI Ecosystems</h3>
                 <p class="text-gray-500 text-sm leading-relaxed" data-key="service1-p">Custom-built LLM architectures that transform your internal data into business intelligence.</p>
             </div>
-            <div class="group">
+            <div class="group service-card">
                 <div class="hex-icon w-20 h-20 mb-8 transition-transform group-hover:scale-110">
                     <svg class="w-8 h-8 text-[#09cdd2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
                 </div>
                 <h3 class="text-2xl font-bold mb-4 tracking-tight" data-key="service2-h">Digital Interface</h3>
                 <p class="text-gray-500 text-sm leading-relaxed" data-key="service2-p">High-performance web platforms with AI-driven user experiences.</p>
             </div>
-            <div class="group">
+            <div class="group service-card">
                 <div class="hex-icon w-20 h-20 mb-8 transition-transform group-hover:scale-110">
                     <svg class="w-8 h-8 text-[#09cdd2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
                 </div>
@@ -178,7 +215,7 @@
             ro: {
                 "nav-services": "Servicii", "nav-idealab": "Idea Lab", "nav-contact": "Contact",
                 "hero-title": "Evoluție Digitală", "hero-subtitle": "Prin Agenți AI",
-                "hero-description": "Arhitecturi neurale personalizate și agenți autonomi creați pentru a vă redefinească scala operațională.",
+                "hero-description": "Arhitecturi neurale personalizate și agenți autonomi creați pentru a vă transforma și extinde activitatea.",
                 "btn-start": "Trimite Ideea Ta", "btn-view": "Soluții",
                 "service1-h": "Ecosisteme AI", "service1-p": "Arhitecturi LLM custom care transformă datele interne în inteligență de business.",
                 "service2-h": "Interfețe Digitale", "service2-p": "Platforme web performante cu experiențe de utilizare bazate pe AI.",
@@ -243,6 +280,34 @@
         const savedLang = localStorage.getItem('preferredLang') || 'en';
         document.querySelector('select').value = savedLang;
         changeLanguage(savedLang);
+    </script>
+    <script>
+        (() => {
+            const cards = Array.from(document.querySelectorAll('.service-card'));
+            const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (!('IntersectionObserver' in window) || motion.matches) return;
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.addEventListener('animationend', () => {
+                        entry.target.classList.remove('reveal-ready', 'is-visible');
+                    }, { once: true });
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                });
+            }, { threshold: 0.12 });
+            cards.forEach((card, index) => {
+                card.style.setProperty('--reveal-delay', `${index * 100}ms`);
+                card.classList.add('reveal-ready');
+                observer.observe(card);
+            });
+            const revealAll = () => {
+                if (!motion.matches) return;
+                observer.disconnect();
+                cards.forEach(card => card.classList.remove('reveal-ready'));
+            };
+            if (motion.addEventListener) motion.addEventListener('change', revealAll);
+        })();
     </script>
 </body>
 </html>
