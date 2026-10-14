@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apps | StecStudio</title>
+    <meta name="description" content="Android and web apps built by StecStudio – practical tools with AI inside.">
+    <meta name="theme-color" content="#050608">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Apps | StecStudio">
+    <meta property="og:description" content="Android and web apps built by StecStudio – practical tools with AI inside.">
+    <meta property="og:url" content="https://stecstudio.ai/apps/">
+    <meta property="og:image" content="https://stecstudio.ai/og-image.jpg">
+    <link rel="canonical" href="https://stecstudio.ai/apps/">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 103 134'%3E%3Cpolyline points='85,36 54,16 14,40 14,56 46,76' fill='none' stroke='%23f4f6f9' stroke-width='22' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpolyline points='60,50 89,69 89,93 51,118 14,93 14,83' fill='none' stroke='%2309cdd2' stroke-width='22' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="preload" href="/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/fonts/fonts.css">
+
+    <style>
+        :root {
+            --bg: #050608; --surface: #0a0e15; --surface-2: #0f1520;
+            --line: rgba(255, 255, 255, .08); --line-strong: rgba(255, 255, 255, .16);
+            --text: #f2f4f7; --muted: #a1a9b7; --cyan: #09cdd2;
+            --cyan-soft: rgba(9, 205, 210, .1); --cyan-line: rgba(9, 205, 210, .3);
+            --radius: 28px; --nav-h: 80px; --ease: cubic-bezier(.2, .7, .2, 1);
+            --font-display: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { -webkit-text-size-adjust: 100%; }
+        body { margin: 0; font-family: var(--font-body); font-size: 16px; line-height: 1.6; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+        img, svg { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+        button, select { font: inherit; color: inherit; }
+        h1, h2, h3 { font-family: var(--font-display); margin: 0; line-height: 1.1; letter-spacing: -.02em; }
+        p { margin: 0; }
+        ul { margin: 0; padding: 0; list-style: none; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        :focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; border-radius: 6px; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            padding: 15px 26px; border-radius: 999px; border: 1px solid transparent;
+            font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+            cursor: pointer; transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s, color .25s, border-color .25s;
+        }
+        .btn svg { width: 16px; height: 16px; }
+        .btn-primary { background: var(--cyan); color: #001314; box-shadow: 0 0 24px rgba(9, 205, 210, .22); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(9, 205, 210, .42); }
+        .btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--text); }
+        .btn-ghost:hover { background: var(--text); color: #000; }
+        .btn-soon { background: var(--cyan-soft); border-color: var(--cyan-line); color: var(--cyan); cursor: default; }
+
+        /* Brand + nav (same look as the main site) */
+        .brand { display: inline-flex; align-items: center; gap: 12px; }
+        .brand svg { width: 34px; height: auto; flex: none; transition: filter .4s ease; }
+        .wordmark { display: flex; flex-direction: column; font-family: var(--font-display); line-height: 1; }
+        .wordmark b { font-weight: 800; font-size: 22px; letter-spacing: .02em; transition: text-shadow .4s ease; }
+        .wordmark span { font-weight: 400; font-size: 9.5px; letter-spacing: .58em; margin-top: 5px; transition: text-shadow .4s ease; }
+        .brand:hover .wordmark b, .brand:hover .wordmark span { text-shadow: 0 0 8px rgba(9, 205, 210, .7), 0 0 20px rgba(9, 205, 210, .35); }
+        .brand:hover svg { filter: drop-shadow(0 0 6px rgba(9, 205, 210, .6)); }
+
+        .nav {
+            position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--nav-h);
+            background: rgba(5, 6, 8, .82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--line);
+        }
+        .nav .container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+        .nav-right { display: flex; align-items: center; gap: 28px; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { position: relative; font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); transition: color .2s; }
+        .nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: var(--cyan); transform: scaleX(0); transition: transform .25s var(--ease); }
+        .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--text); }
+        .nav-links a:hover::after, .nav-links a[aria-current="page"]::after { transform: scaleX(1); }
+        .lang-select {
+            appearance: none; -webkit-appearance: none;
+            background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a1a9b7' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center / 12px;
+            border: 1px solid var(--line-strong); border-radius: 999px; padding: 9px 34px 9px 16px;
+            font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: border-color .2s;
+        }
+        .lang-select:hover { border-color: var(--cyan); }
+        .lang-select option { background: var(--surface); color: var(--text); }
+
+        /* Hero */
+        .hero { position: relative; padding: calc(var(--nav-h) + 96px) 0 72px; text-align: center; overflow: hidden; }
+        .hero::before {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background-image: radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px); background-size: 28px 28px;
+            -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 20%, transparent 75%);
+                    mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, #000 20%, transparent 75%);
+        }
+        .hero-glow {
+            position: absolute; top: 45%; left: 50%; width: 560px; height: 560px; max-width: 120vw; transform: translate(-50%, -50%);
+            border-radius: 50%; pointer-events: none; filter: blur(40px);
+            background: radial-gradient(circle, rgba(9, 205, 210, .16), rgba(15, 38, 75, .12) 45%, transparent 70%);
+        }
+        .hero .container { position: relative; z-index: 1; max-width: 860px; }
+        .badge {
+            display: inline-block; padding: 9px 20px; margin-bottom: 32px; border: 1px solid var(--cyan-line); border-radius: 999px;
+            background: var(--cyan-soft); color: var(--cyan); font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase;
+        }
+        .hero h1 { font-size: clamp(40px, 7vw, 76px); font-weight: 900; letter-spacing: -.035em; line-height: 1.04; margin-bottom: 24px; }
+        .hero h1 span { display: block; }
+        .text-gradient {
+            background: linear-gradient(90deg, var(--cyan), #8ff3f5 55%, #ffffff); -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent; padding-bottom: .08em;
+        }
+        .hero p { color: var(--muted); font-size: clamp(17px, 2vw, 19px); font-weight: 300; max-width: 640px; margin: 0 auto; }
+
+        /* App cards */
+        .apps { padding: 24px 0 120px; }
+        .app-list { display: grid; gap: 32px; }
+        .app-card {
+            position: relative; display: grid; grid-template-columns: 5fr 7fr; overflow: hidden;
+            border-radius: var(--radius); border: 1px solid var(--line);
+            background: linear-gradient(180deg, var(--surface-2), var(--surface));
+            transition: border-color .35s, box-shadow .35s, transform .35s var(--ease);
+        }
+        .app-card::before {
+            content: ""; position: absolute; inset: 0 0 auto; height: 1px; z-index: 1;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent); opacity: 0; transition: opacity .35s;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .app-card:hover { border-color: var(--cyan-line); box-shadow: 0 30px 70px -36px rgba(9, 205, 210, .4); transform: translateY(-4px); }
+            .app-card:hover::before { opacity: 1; }
+        }
+        .app-visual {
+            position: relative; display: grid; place-items: center; padding: 48px 24px; min-height: 480px;
+            background: radial-gradient(circle at 50% 45%, rgba(9, 205, 210, .18), rgba(15, 38, 75, .25) 40%, transparent 72%);
+            border-right: 1px solid var(--line);
+        }
+        .phone {
+            position: relative; flex: none; width: 210px; border-radius: 34px; padding: 8px;
+            background: #151b26; border: 1px solid var(--line-strong);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .8), 0 0 50px rgba(9, 205, 210, .12);
+        }
+        .phone::before { content: ""; position: absolute; top: 15px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #05070b; z-index: 2; }
+        .screen { aspect-ratio: 9 / 20; border-radius: 27px; overflow: hidden; background: var(--bg); }
+        .phones { display: flex; align-items: center; }
+        .phones .phone + .phone { width: 190px; margin-left: -64px; z-index: -1; transform: translateY(28px) rotate(4deg); opacity: .92; }
+        .phones { position: relative; z-index: 0; }
+        .screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+        .browser {
+            width: 100%; max-width: 680px; border-radius: 14px; overflow: hidden; background: #151b26;
+            border: 1px solid var(--line-strong); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .8), 0 0 50px rgba(9, 205, 210, .12);
+        }
+        .browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+        .browser-bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 255, 255, .18); }
+        .browser-bar span { flex: 1; margin-left: 8px; height: 18px; border-radius: 999px; background: rgba(255, 255, 255, .06); }
+        .browser img { width: 100%; height: auto; }
+        @media (min-width: 901px) {
+            .app-card:nth-child(even) { grid-template-columns: 7fr 5fr; }
+            .app-card:nth-child(even) .app-visual { order: 2; border-right: 0; border-left: 1px solid var(--line); }
+            /* web apps: the screenshot gets the wider column */
+            .app-card.is-web { grid-template-columns: 7fr 5fr; }
+            .app-card.is-web:nth-child(even) { grid-template-columns: 5fr 7fr; }
+            .app-card.is-web .app-visual { padding: 48px 32px; }
+        }
+        .screen-placeholder {
+            height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px 16px; text-align: center;
+            background: radial-gradient(circle at 50% 30%, rgba(9, 205, 210, .25), transparent 60%), linear-gradient(180deg, #0f264b, #050608);
+        }
+        .screen-placeholder .app-icon { width: 64px; height: 64px; }
+        .screen-placeholder b { font-family: var(--font-display); font-size: 17px; }
+        .screen-placeholder code {
+            font-family: ui-monospace, 'Cascadia Code', Consolas, monospace; font-size: 12px; color: var(--cyan);
+            padding: 8px 12px; border: 1px solid var(--cyan-line); border-radius: 10px; background: rgba(5, 6, 8, .5);
+        }
+        .app-icon { color: var(--cyan); }
+
+        .app-body { padding: 48px 48px 44px; display: flex; flex-direction: column; }
+        .app-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .tag {
+            padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line-strong);
+            font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+        }
+        .tag.platform { border-color: var(--cyan-line); color: var(--cyan); background: var(--cyan-soft); }
+        .app-body h2 { font-size: clamp(28px, 3.4vw, 38px); font-weight: 800; margin-bottom: 16px; }
+        .app-desc { color: var(--muted); font-size: 16px; margin-bottom: 28px; }
+        .app-features { display: grid; gap: 12px; padding-top: 24px; border-top: 1px solid var(--line); margin-bottom: 36px; }
+        .app-features li { position: relative; padding-left: 26px; font-size: 15px; }
+        .app-features li::before {
+            content: ""; position: absolute; left: 0; top: .5em; width: 10px; height: 10px; background: var(--cyan);
+            clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+        }
+        .app-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: auto; }
+        .app-legal { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 22px; font-size: 13px; }
+        .app-legal a { color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+        .app-legal a:hover { color: var(--cyan); }
+
+        /* Call to action */
+        .cta {
+            margin-top: 72px; text-align: center; padding: 64px 32px; border-radius: 40px; border: 1px solid var(--cyan-line);
+            background: radial-gradient(ellipse at 50% 0%, rgba(9, 205, 210, .14), transparent 65%), var(--surface);
+        }
+        .cta h2 { font-size: clamp(26px, 4vw, 40px); font-weight: 800; margin-bottom: 14px; }
+        .cta p { color: var(--muted); font-size: 17px; font-weight: 300; max-width: 520px; margin: 0 auto 32px; }
+
+        .footer { padding: 40px 0; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); letter-spacing: .08em; }
+        .footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+        .footer a:hover { color: var(--cyan); }
+
+        @media (max-width: 900px) {
+            :root { --nav-h: 70px; }
+            .nav-right { gap: 16px; }
+            .nav-links { gap: 18px; }
+            .nav-links .hide-sm { display: none; }
+            .app-card { grid-template-columns: 1fr; }
+            .app-visual { min-height: 0; padding: 44px 24px; border-right: 0; border-bottom: 1px solid var(--line); }
+            .app-body { padding: 36px 28px; }
+        }
+        @media (max-width: 600px) {
+            .container { padding: 0 16px; }
+            .brand svg { width: 28px; }
+            .wordmark b { font-size: 19px; }
+            .wordmark span { font-size: 8px; }
+            .lang-select { padding: 8px 28px 8px 12px; background-position: right 9px center; }
+            .hero { padding-top: calc(var(--nav-h) + 64px); }
+            .app-body { padding: 32px 22px; }
+            .app-actions .btn { width: 100%; }
+            .phone { width: 180px; }
+            .phones .phone + .phone { width: 160px; margin-left: -72px; }
+            .cta { padding: 48px 20px; border-radius: 28px; }
+            .cta .btn { width: 100%; }
+            .footer .container { flex-direction: column; text-align: center; }
+        }
+        @media (prefers-reduced-motion: no-preference) {
+            .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+            .js .reveal.is-visible { opacity: 1; transform: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+    </style>
+    <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="stec-mark" viewBox="0 0 103 134">
+            <polyline points="85,36 54,16 14,40 14,56 46,76" fill="none" stroke="#f4f6f9" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="60,50 89,69 89,93 51,118 14,93 14,83" fill="none" stroke="#09cdd2" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+    </svg>
+
+    <header class="nav">
+        <div class="container">
+            <a href="/" class="brand" aria-label="StecStudio">
+                <svg viewBox="0 0 103 134" aria-hidden="true"><use href="#stec-mark"/></svg>
+                <span class="wordmark" aria-hidden="true"><b>STEC</b><span>STUDIO</span></span>
+            </a>
+            <div class="nav-right">
+                <nav class="nav-links" aria-label="Main">
+                    <a href="/" class="hide-sm" data-i18n="nav-home">Home</a>
+                    <a href="/apps/" aria-current="page" data-i18n="nav-apps">Apps</a>
+                    <a href="/#contact" class="hide-sm" data-i18n="nav-contact">Contact</a>
+                </nav>
+                <select id="lang-select" class="lang-select" aria-label="Language">
+                    <option value="en">EN</option>
+                    <option value="fr">FR</option>
+                    <option value="de">DE</option>
+                    <option value="it">IT</option>
+                    <option value="ro">RO</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-glow" aria-hidden="true"></div>
+            <div class="container">
+                <div class="badge" data-i18n="badge">Android &amp; web apps</div>
+                <h1>
+                    <span data-i18n="title">Our apps</span>
+                    <span class="text-gradient" data-i18n="title2">Built by StecStudio</span>
+                </h1>
+                <p data-i18n="lead">Practical tools with AI inside – designed, built and published by us. The same skills we bring to your projects.</p>
+            </div>
+        </section>
+
+        <section class="apps">
+            <div class="container">
+                <div class="app-list" id="app-list"></div>
+
+                <div class="cta reveal">
+                    <h2 data-i18n="cta-h">Have an idea for an app?</h2>
+                    <p data-i18n="cta-p">Tell us what you need – we build Android apps, web platforms and AI agents tailored to your business.</p>
+                    <a href="/#idea-lab" class="btn btn-primary">
+                        <span data-i18n="cta-btn">Submit your idea</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <span>&copy; 2026 StecStudio.ai</span>
+            <a href="mailto:office@stecstudio.ai">office@stecstudio.ai</a>
+        </div>
+    </footer>
+
+    <script>
+        /* ======================================================================
+           AICI ADAUGI APLICAȚIILE. Fiecare aplicație e un bloc { ... }.
+           - images: capturile de ecran (fișierele stau în folderul aplicației, ex. /apps/kks-decoder/...).
+                     Prima e telefonul din față; a doua (opțional) apare în spate. Lasă [] cât timp nu ai capturi.
+           - platform: 'android' (cadru de telefon) sau 'web' (cadru de browser).
+           - play:  linkul Google Play. Lasă '' cât timp aplicația nu e publicată – apare „În curând”.
+           - url:   pentru aplicații web, adresa aplicației (buton „Deschide aplicația”).
+                    Lasă '' și pune demo: true ca să apară butonul „Cere un demo” (email către noi).
+           ====================================================================== */
+        const APPS = [
+            {
+                name: 'KKS Decoder',
+                platform: 'android',
+                images: ['/apps/kks-decoder/screen-decoder.webp', '/apps/kks-decoder/screen-scan.webp'],
+                sample: '1 LAB 10 AP001',
+                play: '',
+                privacy: '/apps/kks-decoder/privacy/',
+                deleteAccount: '/apps/kks-decoder/delete-account/',
+                tags: { en: ['Engineering', 'AI'], fr: ['Ingénierie', 'IA'], de: ['Technik', 'KI'], it: ['Ingegneria', 'IA'], ro: ['Inginerie', 'AI'] },
+                desc: {
+                    en: 'Decode KKS power plant identification codes in seconds. Scan a label with your camera or type the code, and get a clear breakdown of every level – with AI explanations when you need more context.',
+                    fr: 'Décodez en quelques secondes les codes d’identification KKS des centrales électriques. Scannez une étiquette avec l’appareil photo ou saisissez le code, et obtenez une explication claire de chaque niveau – avec l’aide de l’IA quand vous avez besoin de plus de contexte.',
+                    de: 'Entschlüsseln Sie KKS-Kennzeichen aus Kraftwerken in Sekunden. Scannen Sie ein Schild mit der Kamera oder geben Sie den Code ein und erhalten Sie eine klare Aufschlüsselung jeder Ebene – mit KI-Erklärungen, wenn Sie mehr Kontext brauchen.',
+                    it: 'Decodifica in pochi secondi i codici di identificazione KKS delle centrali elettriche. Scansiona un’etichetta con la fotocamera o inserisci il codice e ottieni una spiegazione chiara di ogni livello – con l’aiuto dell’IA quando ti serve più contesto.',
+                    ro: 'Decodează în câteva secunde codurile KKS de identificare din centralele electrice. Scanezi eticheta cu camera sau introduci codul și primești explicația clară a fiecărui nivel – cu ajutorul inteligenței artificiale, când ai nevoie de mai mult context.'
+                },
+                features: {
+                    en: ['Camera scan with on-device text recognition, low-light boost and flashlight', 'Finds several KKS tags on one label at once', 'History and built-in KKS dictionary', 'AI explanations powered by Google Gemini'],
+                    fr: ['Scan par caméra avec reconnaissance de texte sur l’appareil, mode faible luminosité et lampe', 'Détecte plusieurs codes KKS sur une même étiquette', 'Historique et dictionnaire KKS intégré', 'Explications par IA avec Google Gemini'],
+                    de: ['Kamera-Scan mit Texterkennung auf dem Gerät, Low-Light-Boost und Taschenlampe', 'Erkennt mehrere KKS-Kennzeichen auf einem Schild', 'Verlauf und integriertes KKS-Wörterbuch', 'KI-Erklärungen mit Google Gemini'],
+                    it: ['Scansione con fotocamera e riconoscimento del testo sul dispositivo, modalità scarsa luce e torcia', 'Rileva più codici KKS sulla stessa etichetta', 'Cronologia e dizionario KKS integrato', 'Spiegazioni IA con Google Gemini'],
+                    ro: ['Scanare cu camera și recunoașterea textului direct pe telefon, mod pentru lumină slabă și lanternă', 'Găsește mai multe coduri KKS pe aceeași etichetă', 'Istoric și dicționar KKS integrat', 'Explicații AI cu Google Gemini']
+                }
+            },
+            {
+                name: 'Montessori Assistant',
+                platform: 'web',
+                images: ['/apps/montessori-assistant/screen-observation.webp'],
+                url: '',
+                demo: true,
+                privacy: '/apps/montessori-assistant/privacy/',
+                tags: { en: ['Education', 'AI'], fr: ['Éducation', 'IA'], de: ['Bildung', 'KI'], it: ['Educazione', 'IA'], ro: ['Educație', 'AI'] },
+                desc: {
+                    en: 'A digital assistant for Montessori teachers and assistants. Structured observation protocols for every role, lesson planning and PDF reports – with an AI pedagogical assistant based on the principles of the Montessori method.',
+                    fr: 'Un assistant numérique pour les enseignants et assistants Montessori. Des protocoles d’observation structurés pour chaque rôle, la planification des présentations et des rapports PDF – avec un assistant pédagogique IA fondé sur les principes de la pédagogie Montessori.',
+                    de: 'Ein digitaler Assistent für Montessori-Lehrpersonen und -Assistenzen. Strukturierte Beobachtungsprotokolle für jede Rolle, Planung der Darbietungen und PDF-Berichte – mit einem pädagogischen KI-Assistenten nach den Grundsätzen der Montessori-Pädagogik.',
+                    it: 'Un assistente digitale per insegnanti e assistenti Montessori. Protocolli di osservazione strutturati per ogni ruolo, pianificazione delle presentazioni e report PDF – con un assistente pedagogico IA basato sui principi del metodo Montessori.',
+                    ro: 'Un asistent digital pentru profesorii și asistenții Montessori. Protocoale de observație structurate pentru fiecare rol, planificarea prezentărilor și rapoarte PDF – cu un asistent pedagogic AI bazat pe principiile metodei Montessori.'
+                },
+                features: {
+                    en: ['Observation protocols for parents & visitors, assistants and teachers', 'Individual child observation with voice recordings', 'Presentations planner, peace table & behaviour, international calendar', 'AI pedagogical assistant and PDF reports'],
+                    fr: ['Protocoles d’observation pour parents et visiteurs, assistants et enseignants', 'Observation individuelle de l’enfant avec enregistrements vocaux', 'Planificateur de présentations, table de la paix et comportement, calendrier international', 'Assistant pédagogique IA et rapports PDF'],
+                    de: ['Beobachtungsprotokolle für Eltern und Besucher, Assistenzen und Lehrpersonen', 'Individuelle Beobachtung des Kindes mit Sprachaufnahmen', 'Planer für Darbietungen, Friedenstisch & Verhalten, internationaler Kalender', 'Pädagogischer KI-Assistent und PDF-Berichte'],
+                    it: ['Protocolli di osservazione per genitori e visitatori, assistenti e insegnanti', 'Osservazione individuale del bambino con registrazioni vocali', 'Pianificatore delle presentazioni, tavolo della pace e comportamento, calendario internazionale', 'Assistente pedagogico IA e report PDF'],
+                    ro: ['Protocoale de observație pentru părinți și vizitatori, asistenți și profesori', 'Observarea individuală a copilului, cu înregistrări vocale', 'Planificator de prezentări, masa păcii și comportament, calendar internațional', 'Asistent pedagogic AI și rapoarte PDF']
+                }
+            },
+            {
+                name: 'Engineering Documents',
+                platform: 'web',
+                images: ['/apps/engineering-documents/screen-home.webp'],
+                url: '',
+                demo: true,
+                privacy: '/apps/engineering-documents/privacy/',
+                tags: { en: ['Engineering', 'Claude AI'], fr: ['Ingénierie', 'Claude AI'], de: ['Technik', 'Claude AI'], it: ['Ingegneria', 'Claude AI'], ro: ['Inginerie', 'Claude AI'] },
+                desc: {
+                    en: 'An AI workspace for drawings and technical documents. Upload P&IDs, datasheets, specifications and manuals – and get valve positions, I/O lists, LOTO isolation points, cause & effect matrices and document checks in minutes. Paid per task, with the price shown before you start.',
+                    fr: 'Un espace de travail IA pour les plans et documents techniques. Importez P&ID, fiches techniques, spécifications et manuels – et obtenez en quelques minutes positions de vannes, listes d’E/S, points d’isolement LOTO, matrices cause-effet et contrôles de documents. Paiement par tâche, avec le prix affiché avant de commencer.',
+                    de: 'Ein KI-Arbeitsbereich für Zeichnungen und technische Dokumente. Laden Sie R&I-Schemata, Datenblätter, Spezifikationen und Handbücher hoch – und erhalten Sie in Minuten Armaturenstellungen, E/A-Listen, LOTO-Freischaltpunkte, Ursache-Wirkungs-Matrizen und Dokumentprüfungen. Bezahlt wird pro Aufgabe, der Preis wird vorher angezeigt.',
+                    it: 'Uno spazio di lavoro IA per disegni e documenti tecnici. Carica P&ID, schede tecniche, specifiche e manuali – e ottieni in pochi minuti posizioni delle valvole, liste I/O, punti di isolamento LOTO, matrici causa-effetto e verifiche dei documenti. Si paga per attività, con il prezzo indicato prima di iniziare.',
+                    ro: 'Un spațiu de lucru cu inteligență artificială pentru desene și documente tehnice. Încarci P&ID-uri, fișe tehnice, specificații și manuale – și obții în câteva minute pozițiile vanelor, liste I/O, puncte de izolare LOTO, matrici cauză-efect și verificări de documente. Plătești per sarcină, cu prețul afișat înainte să începi.'
+                },
+                features: {
+                    en: ['Document library with full-text search and questions answered with sources', 'P&ID valve positions, instrument / I/O lists, LOTO isolation, C&E matrices', 'SOPs and checklists, requirements check, standards audit, contradiction finder', 'Compare document versions and extract chart data to Excel'],
+                    fr: ['Bibliothèque de documents avec recherche plein texte et réponses sourcées', 'Positions de vannes P&ID, listes d’instruments / E/S, isolement LOTO, matrices cause-effet', 'Procédures et check-lists, contrôle des exigences, audit de normes, détection de contradictions', 'Comparaison de versions et extraction des données de graphiques vers Excel'],
+                    de: ['Dokumentenbibliothek mit Volltextsuche und Antworten mit Quellenangabe', 'Armaturenstellungen aus R&I-Schemata, Instrumenten- / E/A-Listen, LOTO-Freischaltung, Ursache-Wirkungs-Matrizen', 'Arbeitsanweisungen und Checklisten, Anforderungsprüfung, Normen-Audit, Widerspruchssuche', 'Versionsvergleich und Diagrammdaten nach Excel'],
+                    it: ['Libreria di documenti con ricerca nel testo e risposte con fonti', 'Posizioni delle valvole dai P&ID, liste strumenti / I/O, isolamento LOTO, matrici causa-effetto', 'Procedure e checklist, verifica dei requisiti, audit delle norme, ricerca di contraddizioni', 'Confronto tra versioni ed estrazione dei dati dei grafici in Excel'],
+                    ro: ['Bibliotecă de documente cu căutare în text și răspunsuri cu surse', 'Pozițiile vanelor din P&ID, liste de instrumente / I/O, izolare LOTO, matrici cauză-efect', 'Proceduri și checklist-uri, verificarea cerințelor, audit față de standarde, găsirea contradicțiilor', 'Compararea versiunilor și extragerea datelor din grafice în Excel']
+                }
+            }
+        ];
+
+        const I18N = {
+            en: { 'meta-title': 'Apps | StecStudio', 'nav-home': 'Home', 'nav-apps': 'Apps', 'nav-contact': 'Contact', badge: 'Android & web apps', title: 'Our apps', title2: 'Built by StecStudio',
+                  lead: 'Practical tools with AI inside – designed, built and published by us. The same skills we bring to your projects.',
+                  play: 'Get it on Google Play', soon: 'Coming soon on Google Play', web: 'Web app', open: 'Open the app', demo: 'Request a demo', privacy: 'Privacy policy', del: 'Delete account', screenshot: 'Screenshot of',
+                  'cta-h': 'Have an idea for an app?', 'cta-p': 'Tell us what you need – we build Android apps, web platforms and AI agents tailored to your business.', 'cta-btn': 'Submit your idea' },
+            fr: { 'meta-title': 'Applications | StecStudio', 'nav-home': 'Accueil', 'nav-apps': 'Applications', 'nav-contact': 'Contact', badge: 'Applications Android et web', title: 'Nos applications', title2: 'Créées par StecStudio',
+                  lead: 'Des outils pratiques avec l’IA intégrée – conçus, développés et publiés par nous. Le même savoir-faire que nous mettons dans vos projets.',
+                  play: 'Disponible sur Google Play', soon: 'Bientôt sur Google Play', web: 'Application web', open: 'Ouvrir l’application', demo: 'Demander une démo', privacy: 'Politique de confidentialité', del: 'Supprimer le compte', screenshot: 'Capture d’écran de',
+                  'cta-h': 'Vous avez une idée d’application ?', 'cta-p': 'Dites-nous ce dont vous avez besoin – nous créons des applications Android, des plateformes web et des agents IA adaptés à votre entreprise.', 'cta-btn': 'Proposer votre idée' },
+            de: { 'meta-title': 'Apps | StecStudio', 'nav-home': 'Start', 'nav-apps': 'Apps', 'nav-contact': 'Kontakt', badge: 'Android- und Web-Apps', title: 'Unsere Apps', title2: 'Entwickelt von StecStudio',
+                  lead: 'Praktische Werkzeuge mit integrierter KI – von uns konzipiert, entwickelt und veröffentlicht. Dasselbe Können, das wir in Ihre Projekte einbringen.',
+                  play: 'Jetzt bei Google Play', soon: 'Bald bei Google Play', web: 'Web-App', open: 'App öffnen', demo: 'Demo anfragen', privacy: 'Datenschutzerklärung', del: 'Konto löschen', screenshot: 'Screenshot von',
+                  'cta-h': 'Sie haben eine App-Idee?', 'cta-p': 'Sagen Sie uns, was Sie brauchen – wir entwickeln Android-Apps, Web-Plattformen und KI-Agenten für Ihr Unternehmen.', 'cta-btn': 'Idee einreichen' },
+            it: { 'meta-title': 'App | StecStudio', 'nav-home': 'Home', 'nav-apps': 'App', 'nav-contact': 'Contatto', badge: 'App Android e web', title: 'Le nostre app', title2: 'Create da StecStudio',
+                  lead: 'Strumenti pratici con l’IA integrata – progettati, sviluppati e pubblicati da noi. Le stesse competenze che portiamo nei tuoi progetti.',
+                  play: 'Disponibile su Google Play', soon: 'Presto su Google Play', web: 'App web', open: 'Apri l’app', demo: 'Richiedi una demo', privacy: 'Informativa sulla privacy', del: 'Elimina account', screenshot: 'Schermata di',
+                  'cta-h': 'Hai un’idea per un’app?', 'cta-p': 'Raccontaci di cosa hai bisogno – sviluppiamo app Android, piattaforme web e agenti IA su misura per la tua azienda.', 'cta-btn': 'Invia la tua idea' },
+            ro: { 'meta-title': 'Aplicații | StecStudio', 'nav-home': 'Acasă', 'nav-apps': 'Aplicații', 'nav-contact': 'Contact', badge: 'Aplicații Android și web', title: 'Aplicațiile noastre', title2: 'Create de StecStudio',
+                  lead: 'Instrumente practice cu inteligență artificială – gândite, construite și publicate de noi. Aceleași abilități pe care le aducem în proiectele tale.',
+                  play: 'Descarcă de pe Google Play', soon: 'În curând pe Google Play', web: 'Aplicație web', open: 'Deschide aplicația', demo: 'Cere un demo', privacy: 'Politica de confidențialitate', del: 'Ștergerea contului', screenshot: 'Captură de ecran din',
+                  'cta-h': 'Ai o idee de aplicație?', 'cta-p': 'Spune-ne de ce ai nevoie – construim aplicații Android, platforme web și agenți AI adaptați afacerii tale.', 'cta-btn': 'Trimite ideea ta' }
+        };
+
+        (() => {
+            const LANGS = Object.keys(I18N);
+            const select = document.getElementById('lang-select');
+            const list = document.getElementById('app-list');
+            const store = {
+                get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+                set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
+            };
+            const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+            const svg = html => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstChild; };
+            const ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3.5v17a1 1 0 001.5.86l14-8.5a1 1 0 000-1.72l-14-8.5A1 1 0 005 3.5z"/></svg>';
+            const ICON_APP = '<svg class="app-icon" viewBox="0 0 72 72" aria-hidden="true"><path d="M36 3 L65 19.5 V52.5 L36 69 L7 52.5 V19.5 Z" fill="rgba(9,205,210,.12)" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><svg x="18" y="18" width="36" height="36" viewBox="0 0 103 134"><use href="#stec-mark"/></svg></svg>';
+
+            function card(app, lang, t) {
+                const article = el('article', 'app-card reveal' + (app.platform === 'web' ? ' is-web' : ''));
+
+                const visual = el('div', 'app-visual');
+                const shots = app.images || [];
+                const shotImg = (src, i) => {
+                    const img = el('img');
+                    img.src = src; img.alt = i ? '' : t.screenshot + ' ' + app.name; img.decoding = 'async';
+                    if (i) img.loading = 'lazy';
+                    return img;
+                };
+                if (app.platform === 'web') {
+                    const browser = el('div', 'browser');
+                    const bar = el('div', 'browser-bar');
+                    bar.append(el('i'), el('i'), el('i'), el('span'));
+                    browser.append(bar);
+                    if (shots[0]) browser.append(shotImg(shots[0], 0));
+                    visual.append(browser);
+                } else {
+                    const phones = el('div', 'phones');
+                    const phone = fill => { const p = el('div', 'phone'); const sc = el('div', 'screen'); fill(sc); p.append(sc); phones.append(p); };
+                    if (shots.length) {
+                        shots.slice(0, 2).forEach((src, i) => phone(sc => sc.append(shotImg(src, i))));
+                    } else {
+                        phone(sc => {
+                            const ph = el('div', 'screen-placeholder');
+                            ph.append(svg(ICON_APP), el('b', null, app.name));
+                            if (app.sample) ph.append(el('code', null, app.sample));
+                            sc.append(ph);
+                        });
+                    }
+                    visual.append(phones);
+                }
+
+                const body = el('div', 'app-body');
+                const tags = el('div', 'app-tags');
+                tags.append(el('span', 'tag platform', app.platform === 'web' ? t.web : 'Android'));
+                (app.tags[lang] || app.tags.en).forEach(x => tags.append(el('span', 'tag', x)));
+                const features = el('ul', 'app-features');
+                (app.features[lang] || app.features.en).forEach(x => features.append(el('li', null, x)));
+
+                const actions = el('div', 'app-actions');
+                const button = (href, label, icon, external) => {
+                    const a = el('a', 'btn btn-primary');
+                    a.href = href;
+                    if (external) { a.target = '_blank'; a.rel = 'noopener'; }
+                    if (icon) a.append(svg(icon));
+                    a.append(el('span', null, label));
+                    actions.append(a);
+                };
+                if (app.play) button(app.play, t.play, ICON_PLAY, true);
+                else if (app.url) button(app.url, t.open, null, true);
+                else if (app.demo) button('mailto:office@stecstudio.ai?subject=' + encodeURIComponent('Demo – ' + app.name), t.demo, null, false);
+                else actions.append(el('span', 'btn btn-soon', t.soon));
+
+                const legal = el('div', 'app-legal');
+                [[app.privacy, t.privacy], [app.deleteAccount, t.del]].forEach(([href, label]) => {
+                    if (!href) return;
+                    const a = el('a', null, label);
+                    a.href = href + '?lang=' + lang;
+                    legal.append(a);
+                });
+
+                body.append(tags, el('h2', null, app.name), el('p', 'app-desc', app.desc[lang] || app.desc.en), features, actions, legal);
+                article.append(visual, body);
+                return article;
+            }
+
+            let observer = null;
+            function reveal(items) {
+                if (!('IntersectionObserver' in window)) { items.forEach(e => e.classList.add('is-visible')); return; }
+                observer = observer || new IntersectionObserver(entries => entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }), { threshold: 0.1 });
+                items.forEach(e => observer.observe(e));
+            }
+
+            function apply(lang) {
+                const t = I18N[lang] || I18N.en;
+                document.querySelectorAll('[data-i18n]').forEach(e => { const v = t[e.dataset.i18n]; if (v != null) e.textContent = v; });
+                document.documentElement.lang = lang;
+                document.title = t['meta-title'];
+                select.value = lang;
+                const visible = list.children.length > 0;
+                list.replaceChildren(...APPS.map(app => card(app, lang, t)));
+                if (visible) list.querySelectorAll('.reveal').forEach(e => e.classList.add('is-visible'));
+                else reveal(Array.from(list.querySelectorAll('.reveal')));
+            }
+
+            const fromUrl = (new URLSearchParams(location.search).get('lang') || '').toLowerCase();
+            const saved = store.get('preferredLang');
+            const browser = (navigator.languages || [navigator.language || 'en']).map(l => l.slice(0, 2).toLowerCase()).find(l => LANGS.includes(l));
+            apply([fromUrl, saved, browser].find(l => LANGS.includes(l)) || 'en');
+            reveal(Array.from(document.querySelectorAll('.cta.reveal')));
+
+            select.addEventListener('change', () => {
+                apply(select.value);
+                store.set('preferredLang', select.value);
+                select.blur();
+            });
+        })();
+    </script>
+</body>
+</html>
