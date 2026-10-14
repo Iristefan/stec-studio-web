@@ -773,7 +773,7 @@ We have the code.</h2>
                 "q4": "What happens with my data?", "a4": "Your data is used only for your project. We choose solutions that comply with Swiss data protection law (FADP) and the GDPR and, where needed, can run on your own infrastructure — including in Switzerland.",
                 "q5": "Can you integrate with the tools we already use?", "a5": "In most cases, yes — email, CRM, spreadsheets, online stores or internal databases.",
                 "contact-eyebrow": "Contact", "contact-h": "Let's talk about your project", "contact-p": "Write to us directly or use the form above.", "contact-btn": "Send an email",
-                "footer-rights": "All rights reserved.", "footer-nocookies": "No cookies · No tracking", "footer-privacy": "Privacy",
+                "footer-rights": "All rights reserved.", "footer-nocookies": "No cookies · No tracking", "demo-request": "I would like a demo of {app}.", "footer-privacy": "Privacy",
                 "privacy-h": "Privacy policy", "imprint-h": "Legal notice",
                 "privacy-close": "Close"
             },
@@ -815,7 +815,7 @@ We have the code.</h2>
                 "q4": "Ce se întâmplă cu datele mele?", "a4": "Datele tale sunt folosite doar pentru proiectul tău. Alegem soluții care respectă legea elvețiană privind protecția datelor (nLPD) și GDPR și care, unde e nevoie, pot rula pe infrastructura ta — inclusiv în Elveția.",
                 "q5": "Vă puteți integra cu instrumentele pe care le folosim deja?", "a5": "În cele mai multe cazuri, da — email, CRM, tabele, magazine online sau baze de date interne.",
                 "contact-eyebrow": "Contact", "contact-h": "Hai să discutăm despre proiectul tău", "contact-p": "Scrie-ne direct sau folosește formularul de mai sus.", "contact-btn": "Trimite un email",
-                "footer-rights": "Toate drepturile rezervate.", "footer-nocookies": "Fără cookies · Fără urmărire", "footer-privacy": "Confidențialitate",
+                "footer-rights": "Toate drepturile rezervate.", "footer-nocookies": "Fără cookies · Fără urmărire", "demo-request": "Aș dori un demo pentru {app}.", "footer-privacy": "Confidențialitate",
                 "privacy-h": "Politica de confidențialitate", "imprint-h": "Informații legale",
                 "privacy-close": "Închide"
             },
@@ -857,7 +857,7 @@ We have the code.</h2>
                 "q4": "Que deviennent mes données ?", "a4": "Vos données servent uniquement à votre projet. Nous choisissons des solutions conformes à la loi suisse sur la protection des données (LPD) et au RGPD qui, si nécessaire, peuvent fonctionner sur votre propre infrastructure — y compris en Suisse.",
                 "q5": "Pouvez-vous vous connecter à nos outils actuels ?", "a5": "Dans la plupart des cas, oui — e-mail, CRM, tableurs, boutiques en ligne ou bases de données internes.",
                 "contact-eyebrow": "Contact", "contact-h": "Parlons de votre projet", "contact-p": "Écrivez-nous directement ou utilisez le formulaire ci-dessus.", "contact-btn": "Envoyer un e-mail",
-                "footer-rights": "Tous droits réservés.", "footer-nocookies": "Sans cookies · Sans suivi", "footer-privacy": "Confidentialité",
+                "footer-rights": "Tous droits réservés.", "footer-nocookies": "Sans cookies · Sans suivi", "demo-request": "J’aimerais une démonstration de {app}.", "footer-privacy": "Confidentialité",
                 "privacy-h": "Politique de confidentialité", "imprint-h": "Mentions légales",
                 "privacy-close": "Fermer"
             },
@@ -899,7 +899,7 @@ We have the code.</h2>
                 "q4": "Was passiert mit meinen Daten?", "a4": "Ihre Daten werden ausschliesslich für Ihr Projekt verwendet. Wir wählen Lösungen, die dem Schweizer Datenschutzgesetz (DSG) und der DSGVO entsprechen und bei Bedarf auf Ihrer eigenen Infrastruktur laufen – auch in der Schweiz.",
                 "q5": "Können Sie unsere bestehenden Tools anbinden?", "a5": "In den meisten Fällen ja — E-Mail, CRM, Tabellen, Onlineshops oder interne Datenbanken.",
                 "contact-eyebrow": "Kontakt", "contact-h": "Lassen Sie uns über Ihr Projekt sprechen", "contact-p": "Schreiben Sie uns direkt oder nutzen Sie das Formular oben.", "contact-btn": "E-Mail senden",
-                "footer-rights": "Alle Rechte vorbehalten.", "footer-nocookies": "Keine Cookies · Kein Tracking", "footer-privacy": "Datenschutz",
+                "footer-rights": "Alle Rechte vorbehalten.", "footer-nocookies": "Keine Cookies · Kein Tracking", "demo-request": "Ich möchte gerne eine Demo von {app}.", "footer-privacy": "Datenschutz",
                 "privacy-h": "Datenschutzerklärung", "imprint-h": "Impressum",
                 "privacy-close": "Schliessen"
             },
@@ -941,7 +941,7 @@ We have the code.</h2>
                 "q4": "Cosa succede ai miei dati?", "a4": "I tuoi dati vengono usati solo per il tuo progetto. Scegliamo soluzioni conformi alla legge svizzera sulla protezione dei dati (LPD) e al GDPR che, se necessario, possono funzionare sulla tua infrastruttura — anche in Svizzera.",
                 "q5": "Potete integrarvi con gli strumenti che già usiamo?", "a5": "Nella maggior parte dei casi sì — email, CRM, fogli di calcolo, negozi online o database interni.",
                 "contact-eyebrow": "Contatti", "contact-h": "Parliamo del tuo progetto", "contact-p": "Scrivici direttamente o usa il modulo qui sopra.", "contact-btn": "Invia un'email",
-                "footer-rights": "Tutti i diritti riservati.", "footer-nocookies": "Nessun cookie · Nessun tracciamento", "footer-privacy": "Privacy",
+                "footer-rights": "Tutti i diritti riservati.", "footer-nocookies": "Nessun cookie · Nessun tracciamento", "demo-request": "Vorrei una demo di {app}.", "footer-privacy": "Privacy",
                 "privacy-h": "Informativa sulla privacy", "imprint-h": "Note legali",
                 "privacy-close": "Chiudi"
             }
@@ -976,6 +976,8 @@ We have the code.</h2>
             }
 
             function detectLanguage() {
+                const fromUrl = (new URLSearchParams(location.search).get('lang') || '').toLowerCase();
+                if (LANGS.includes(fromUrl)) return fromUrl;
                 const saved = store.get('preferredLang');
                 if (saved && LANGS.includes(saved)) return saved;
                 const browser = (navigator.languages || [navigator.language || 'en'])
@@ -1191,6 +1193,15 @@ We have the code.</h2>
                     el.style.setProperty('--delay', `${siblings.indexOf(el) * 90}ms`);
                     observer.observe(el);
                 });
+            }
+
+            // Coming from "Request a demo" on /apps/: pre-fill the Idea Lab message with the app's name
+            const demoApp = new URLSearchParams(location.search).get('demo');
+            const idea = document.getElementById('f-idea');
+            if (demoApp && idea && !idea.value) {
+                const t = I18N[document.documentElement.lang] || I18N.en;
+                idea.value = t['demo-request'].replace('{app}', demoApp.slice(0, 80));
+                history.replaceState(null, '', location.pathname + location.hash);
             }
 
             // Legal dialog (Impressum / privacy policy)

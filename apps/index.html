@@ -312,7 +312,8 @@
            - platform: 'android' (cadru de telefon) sau 'web' (cadru de browser).
            - play:  linkul Google Play. Lasă '' cât timp aplicația nu e publicată – apare „În curând”.
            - url:   pentru aplicații web, adresa aplicației (buton „Deschide aplicația”).
-                    Lasă '' și pune demo: true ca să apară butonul „Cere un demo” (email către noi).
+                    Lasă '' și pune demo: true ca să apară butonul „Cere un demo” (duce la formularul Idea Lab,
+                    cu mesajul deja completat cu numele aplicației).
            ====================================================================== */
         const APPS = [
             {
@@ -475,7 +476,7 @@
                 };
                 if (app.play) button(app.play, t.play, ICON_PLAY, true);
                 else if (app.url) button(app.url, t.open, null, true);
-                else if (app.demo) button('mailto:office@stecstudio.ai?subject=' + encodeURIComponent('Demo – ' + app.name), t.demo, null, false);
+                else if (app.demo) button('/?demo=' + encodeURIComponent(app.name) + '&lang=' + lang + '#idea-lab', t.demo, null, false);
                 else actions.append(el('span', 'btn btn-soon', t.soon));
 
                 const legal = el('div', 'app-legal');
