@@ -171,6 +171,7 @@
         .menu-toggle[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
         .menu-toggle[aria-expanded="true"] span::after { transform: translateY(-6px) rotate(-45deg); }
 
+        @media (max-width: 1100px) { .nav-links { gap: 20px; } }
         @media (max-width: 900px) {
             :root { --nav-h: 70px; }
             .menu-toggle { display: inline-flex; }
@@ -473,6 +474,7 @@
                     <a href="#process" data-i18n="nav-process">Process</a>
                     <a href="#idea-lab" data-i18n="nav-idealab">Idea Lab</a>
                     <a href="#faq" data-i18n="nav-faq">FAQ</a>
+                    <a href="/apps/" data-i18n="nav-apps">Apps</a>
                     <a href="#contact" data-i18n="nav-contact">Contact</a>
                 </nav>
                 <select id="lang-select" class="lang-select" aria-label="Language" data-i18n-aria="lang">
@@ -737,7 +739,7 @@ We have the code.</h2>
                 "meta-title": "StecStudio | AI Agents & Digital Solutions",
                 "meta-desc": "StecStudio builds custom AI agents, web platforms and automations for businesses.",
                 "skip": "Skip to content", "menu": "Open menu", "lang": "Language",
-                "nav-services": "Services", "nav-process": "Process", "nav-idealab": "Idea Lab", "nav-faq": "FAQ", "nav-contact": "Contact",
+                "nav-services": "Services", "nav-process": "Process", "nav-idealab": "Idea Lab", "nav-faq": "FAQ", "nav-apps": "Apps", "nav-contact": "Contact",
                 "hero-badge": "AI Agents · Web · Automation",
                 "hero-title": "Elevating Businesses", "hero-subtitle": "Through AI Agents",
                 "hero-description": "We design AI agents, web platforms and automations that take repetitive work off your team — built around your data and your processes.",
@@ -779,7 +781,7 @@ We have the code.</h2>
                 "meta-title": "StecStudio | Agenți AI și soluții digitale",
                 "meta-desc": "StecStudio creează agenți AI, platforme web și automatizări personalizate pentru afaceri.",
                 "skip": "Sari la conținut", "menu": "Deschide meniul", "lang": "Limbă",
-                "nav-services": "Servicii", "nav-process": "Proces", "nav-idealab": "Idea Lab", "nav-faq": "Întrebări", "nav-contact": "Contact",
+                "nav-services": "Servicii", "nav-process": "Proces", "nav-idealab": "Idea Lab", "nav-faq": "Întrebări", "nav-apps": "Aplicații", "nav-contact": "Contact",
                 "hero-badge": "Agenți AI · Web · Automatizare",
                 "hero-title": "Evoluție Digitală", "hero-subtitle": "Prin Agenți AI",
                 "hero-description": "Creăm agenți AI, platforme web și automatizări care preiau munca repetitivă de pe umerii echipei tale — construite pe datele și procesele tale.",
@@ -821,7 +823,7 @@ We have the code.</h2>
                 "meta-title": "StecStudio | Agents IA et solutions digitales",
                 "meta-desc": "StecStudio crée des agents IA, des plateformes web et des automatisations sur mesure pour les entreprises.",
                 "skip": "Aller au contenu", "menu": "Ouvrir le menu", "lang": "Langue",
-                "nav-services": "Services", "nav-process": "Méthode", "nav-idealab": "Labo d'idées", "nav-faq": "FAQ", "nav-contact": "Contact",
+                "nav-services": "Services", "nav-process": "Méthode", "nav-idealab": "Labo d'idées", "nav-faq": "FAQ", "nav-apps": "Applications", "nav-contact": "Contact",
                 "hero-badge": "Agents IA · Web · Automatisation",
                 "hero-title": "Élever les Entreprises", "hero-subtitle": "Grâce aux Agents IA",
                 "hero-description": "Nous concevons des agents IA, des plateformes web et des automatisations qui libèrent votre équipe des tâches répétitives — construits autour de vos données et de vos processus.",
@@ -863,7 +865,7 @@ We have the code.</h2>
                 "meta-title": "StecStudio | KI-Agenten und digitale Lösungen",
                 "meta-desc": "StecStudio entwickelt individuelle KI-Agenten, Webplattformen und Automatisierungen für Unternehmen.",
                 "skip": "Zum Inhalt springen", "menu": "Menü öffnen", "lang": "Sprache",
-                "nav-services": "Leistungen", "nav-process": "Ablauf", "nav-idealab": "Ideen-Labor", "nav-faq": "FAQ", "nav-contact": "Kontakt",
+                "nav-services": "Leistungen", "nav-process": "Ablauf", "nav-idealab": "Ideen-Labor", "nav-faq": "FAQ", "nav-apps": "Apps", "nav-contact": "Kontakt",
                 "hero-badge": "KI-Agenten · Web · Automatisierung",
                 "hero-title": "Unternehmen voranbringen", "hero-subtitle": "Mit KI-Agenten",
                 "hero-description": "Wir entwickeln KI-Agenten, Webplattformen und Automatisierungen, die Ihrem Team wiederkehrende Arbeit abnehmen — zugeschnitten auf Ihre Daten und Prozesse.",
@@ -905,7 +907,7 @@ We have the code.</h2>
                 "meta-title": "StecStudio | Agenti IA e soluzioni digitali",
                 "meta-desc": "StecStudio crea agenti IA, piattaforme web e automazioni su misura per le aziende.",
                 "skip": "Vai al contenuto", "menu": "Apri il menu", "lang": "Lingua",
-                "nav-services": "Servizi", "nav-process": "Metodo", "nav-idealab": "Lab di Idee", "nav-faq": "FAQ", "nav-contact": "Contatti",
+                "nav-services": "Servizi", "nav-process": "Metodo", "nav-idealab": "Lab di Idee", "nav-faq": "FAQ", "nav-apps": "App", "nav-contact": "Contatti",
                 "hero-badge": "Agenti IA · Web · Automazione",
                 "hero-title": "Elevare le Imprese", "hero-subtitle": "Con gli Agenti IA",
                 "hero-description": "Progettiamo agenti IA, piattaforme web e automazioni che liberano il tuo team dal lavoro ripetitivo — costruiti sui tuoi dati e sui tuoi processi.",
@@ -1169,7 +1171,7 @@ We have the code.</h2>
                         links.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === '#' + entry.target.id));
                     });
                 }, { rootMargin: '-45% 0px -50% 0px' });
-                links.forEach(l => { const s = document.querySelector(l.getAttribute('href')); if (s) spy.observe(s); });
+                links.filter(l => l.getAttribute('href').startsWith('#')).forEach(l => { const s = document.querySelector(l.getAttribute('href')); if (s) spy.observe(s); });
             }
 
             // Reveal on scroll
